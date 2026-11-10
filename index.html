@@ -75,6 +75,11 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:18px 10p
 #qa .ov .op:hover{border-color:rgba(217,180,106,.6);background:rgba(217,180,106,.16)}
 #qa .ov .cg{margin-top:12px;font-size:10.5px;color:#6f7684;text-align:center;letter-spacing:.05em}
 #qa #qpop{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,6,9,.74);z-index:90;padding:24px}
+#qa #qtoast{position:fixed;left:50%;transform:translate(-50%,8px);bottom:calc(118px + env(safe-area-inset-bottom,0px));z-index:95;max-width:86vw;background:rgba(16,18,26,.96);border:1px solid rgba(217,180,106,.45);color:#e8e2d2;font-size:12.5px;line-height:1.5;padding:8px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;text-align:center}
+#qa #qtoast.on{opacity:1;transform:translate(-50%,0)}
+#qa #qtoast[data-c="rr"]{border-color:rgba(224,108,91,.75)}
+#qa #qtoast[data-c="gr"]{border-color:rgba(111,211,199,.65)}
+#qa #qtoast[data-c="oo"]{border-color:rgba(242,215,155,.85)}
 #qa #qpop.on{display:flex}
 #qa .popCard{background:linear-gradient(180deg,#141b26,#0d1219);border:1px solid #b98a2f;border-radius:14px;padding:20px 18px 14px;width:100%;max-width:330px;text-align:center;box-shadow:0 10px 34px rgba(0,0,0,.55)}
 #qa .popT{font-size:17px;color:#e8c97a;letter-spacing:3px;margin-bottom:10px}
@@ -157,6 +162,7 @@ body.qb{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 <div style="font-size:11px;opacity:.6;text-align:center;margin-top:8px">当前版本 v<span id="qupdc"></span> · 更新不丢档：新版直接覆盖安装即可</div>
 </div>
 <div id="qpop"></div>
+<div id="qtoast"></div>
 <div id="qbar"><button class="b sm" data-a="med">🧘 打坐</button><button class="b sm" data-a="use" data-i="huichun" id="qbHeal">💊 回春丹</button><button class="b sm" data-a="brk" id="qbBrk">⬆ 突破</button></div>
 </div>
 </div>
@@ -388,7 +394,7 @@ var RECIPES=[
 {id:'huiling',n:'回灵丹',d:'回复 50% 灵力。战斗内外皆可服用（灵力不靠打坐自动回复，只能靠丹药与调息）。',cost:{herb:4,ore:1,stone:30},use:1},
 {id:'juling',n:'聚灵丹',d:'服下立刻获得修为 +800。固定药力：无服用上限、无耐药衰减。元婴期可炼（丹塔秘传）。',cost:{lz:4,yd:2,ds:1,stone:60},use:1,need:3,t:'地'},
 {id:'yanming',n:'延寿丹',d:'服下寿元 +5。寿元将尽之时，这是世间唯一的续命路（丹塔秘传）。',cost:{lz:5,hun:1,lq:1,stone:120},use:1,need:4,t:'地'},
-{id:'mingwu',n:'明悟丹',d:'服下悟性 +1（丹塔秘传，上限 5 枚）。',cost:{lz:6,yd:3,hx:1,stone:200},use:1,need:4,t:'天'}
+{id:'mingwu',n:'明悟丹',d:'服下悟性 +1（丹塔秘传，上限 5 枚）。',cost:{lz:6,yd:2,hx:1,stone:120},use:1,need:4,t:'天'}
 ];
 var ACHS=[
 {id:'a1',n:'初入仙途',d:'首次突破境界',c:function(){return G.stat.brk>=1},r:80},
@@ -396,7 +402,7 @@ var ACHS=[
 {id:'a3',n:'元婴出窍',d:'踏入元婴期',c:function(){return G.realm>=3},r:800},
 {id:'a4',n:'一方巨擘',d:'踏入化神期',c:function(){return G.realm>=4},r:2000,r_eq:'dt'},
 {id:'a5',n:'丹道宗师',d:'炼成 30 枚丹药',c:function(){return G.stat.pill>=30},r:1200},
-{id:'a6',n:'器道大家',d:'炼出 12 件法器',c:function(){return G.stat.forge>=12},r:1000},
+{id:'a6',n:'器道大家',d:'强化或精炼装备累计 12 次',c:function(){return (G.stat.enh||0)>=12},r:1000},
 {id:'a7',n:'除魔卫道',d:'秘境胜 30 场',c:function(){return G.stat.win>=30},r:1500},
 {id:'a8',n:'阅尽红尘',d:'云游经历 40 事',c:function(){return G.stat.ev>=40},r:1800},
 {id:'a9',n:'轮回三世',d:'转世 3 次',c:function(){return G.gen>=3},r:2500,r_eq:'fh'},
@@ -409,7 +415,7 @@ var ACHS=[
 {id:'a16',n:'炉火纯青',d:'炼成 150 枚丹药',c:function(){return G.stat.pill>=150},r:3000}
 ];
 var PG={a1:function(){return '进度：突破 '+G.stat.brk+' / 1 次'},a2:function(){return '当前境界：'+R[G.realm]},a3:function(){return '当前境界：'+R[G.realm]},a4:function(){return '当前境界：'+R[G.realm]},a5:function(){return '进度：炼丹 '+G.stat.pill+' / 30'},a6:function(){return '进度：炼器 '+G.stat.forge+' / 12'},a7:function(){return '进度：胜场 '+G.stat.win+' / 30'},a8:function(){return '进度：云游 '+G.stat.ev+' / 40'},a9:function(){return '进度：第 '+G.gen+' / 3 世'},a10:function(){return '尚未抵达终局'},a11:function(){return '当前战力：'+fs(pw())+' / 3000'},a12:function(){return '进度：胜场 '+G.stat.win+' / 100'},a13:function(){return '当前战力：'+fs(pw())+' / 5000'},a14:function(){return '进度：第 '+G.gen+' / 2 世'},a15:function(){return '进度：炼丹 '+G.stat.pill+' / 60'},a16:function(){return '进度：炼丹 '+G.stat.pill+' / 150'}};
-var OFFG=null;
+var OFFG=null,OFFREB=0;
 var STACK5=['juqi','juqi2','juqi3','cuiti','xisui','pojun','jingang','peiyuan','xuelian','tiangang'];
 var ELEM=['金','木','水','火','土'];
 var G,TB='cul',cd=0,st=0,achT=0,B=null,SAVE_OK=1;
@@ -674,15 +680,15 @@ function finishCraft(safe){
  }
  render();save();
 }
-function say(t,c){G.log.push([t,c||'mm']);if(G.log.length>80)G.log.shift()}
+function say(t,c){G.log.push([t,c||'mm']);if(G.log.length>80)G.log.shift();try{var qt=document.getElementById('qtoast');if(qt){qt.textContent=t;qt.setAttribute('data-c',c||'mm');qt.className='on';clearTimeout(window.__qtT);window.__qtT=setTimeout(function(){qt.className=''},2600)}}catch(e){}}
 function newG(){
- var g={root:'黄',elem:'金',rootId:'',realm:0,sub:0,qi:0,hp:100,age:16,life:90,stone:40,herb:0,ore:0,ins:5,bone:5,contrib:0,luck:0,dao:0,karma:0,demon:0,fame:0,gen:1,ended:0,ch:0,flags:{fresh:1},aff:{},pets:[],arts:{yq:1},eq:{weapon:null,fabao:null,clothes:null,armor:null,pants:null,head:null,boots:null,acc:null},inv:[],eqSeq:1,built:{array:0,field:0,mine:0,furnace:0,forge:0},pills:{juqi:3,juqi2:0,juqi3:0,huqi:0,huichun:1,pojing:0,xisui:0,dujie:0,cuiti:1,peiyuan:0,pojun:0,jingang:0,xuelian:0,tiangang:0,xiling:0,huiling:0,juling:0,yanming:0,mingwu:0},once:{},ach:{},cleared:{},log:[],stat:{brk:0,fail:0,pill:0,forge:0,win:0,lose:0,ev:0},perm:{atk:0,def:0,hp:0},reroll:5,sect:null,drug:{},frag:{},mp:42,enh:0,ref:0,star:0,lz:0,ht:0,yd:0,sg:0,hy:0,hs:0,js:0,xc:0,lwm:0,hun:0,jy:0,slz:0,ds:0,lq:0,hx:0,furns:[],furn:null,srank:0,contribTot:0,sectTasks:0,sectTask:null,sectBan:{},sectCult:0,sectArtProg:0};
+ var g={root:'黄',elem:'金',rootId:'',realm:0,sub:0,qi:0,hp:100,age:16,life:110,stone:40,herb:0,ore:0,ins:5,bone:5,contrib:0,luck:0,dao:0,karma:0,demon:0,fame:0,gen:1,ended:0,ch:0,flags:{fresh:1},aff:{},pets:[],arts:{yq:1},eq:{weapon:null,fabao:null,clothes:null,armor:null,pants:null,head:null,boots:null,acc:null},inv:[],eqSeq:1,built:{array:0,field:0,mine:0,furnace:0,forge:0},pills:{juqi:3,juqi2:0,juqi3:0,huqi:0,huichun:1,pojing:0,xisui:0,dujie:0,cuiti:1,peiyuan:0,pojun:0,jingang:0,xuelian:0,tiangang:0,xiling:0,huiling:0,juling:0,yanming:0,mingwu:0},once:{},ach:{},cleared:{},log:[],evLog:[],stat:{brk:0,fail:0,pill:0,forge:0,win:0,lose:0,ev:0,enh:0},perm:{atk:0,def:0,hp:0},reroll:5,sect:null,drug:{},frag:{},mp:42,enh:0,ref:0,star:0,lz:0,ht:0,yd:0,sg:0,hy:0,hs:0,js:0,xc:0,lwm:0,hun:0,jy:0,slz:0,ds:0,lq:0,hx:0,furns:[],furn:null,srank:0,contribTot:0,sectTasks:0,sectTask:null,sectBan:{},sectCult:0,sectArtProg:0};
  setRoot(g,rollRoot());
  return g;
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({g:G,t:Date.now()}))}catch(e){SAVE_OK=0}}
 function checkStore(){try{localStorage.setItem('qx_merge_test','1');var v=localStorage.getItem('qx_merge_test');localStorage.removeItem('qx_merge_test');SAVE_OK=(v==='1')?1:0}catch(e){SAVE_OK=0}}
-var APP_VER='1.30';
+var APP_VER='1.31';
 var UPD_FEED='https://annuel.framapad.org/p/xiuxian-ver-839201/export/txt';
 var UPD_PAGE='https://muse.ai/s/xiu-xian-wen-dao-iphone-zhu-ping-mu-xtxa6xlxjxtjxubaxn/ZoHtkV6WZ6hnaSFnyc-ViFRS4ubfr8kQ-UJid-_1P8I';
 function verCmp(a,b){a=(''+a).split('.');b=(''+b).split('.');for(var i=0;i<3;i++){var x=parseInt(a[i]||'0',10),y=parseInt(b[i]||'0',10);if(x!==y)return x>y?1:-1}return 0}
@@ -693,7 +699,7 @@ function updCheck(){if(!window.fetch||UPD_FEED.indexOf('http')!==0)return;fetch(
 document.getElementById('qupdno').onclick=updHide;
 document.getElementById('qupdmute').onclick=function(){var v=document.getElementById('qupdv').textContent.replace('v','');try{localStorage.setItem('qx_upd_mute',v)}catch(e){}updHide()};
 document.getElementById('qupdgo').onclick=function(){updHide();if(window.QXApp&&QXApp.openUpdate){QXApp.openUpdate()}else{window.open(UPD_PAGE,'_blank')}}
-function load(){try{var r=localStorage.getItem(KEY);if(!r)return 0;var p=JSON.parse(r);if(!p.g)return 0;G=p.g;var hadRoot=p.g.rootId!==undefined;var hadMp=p.g.mp!==undefined;var b=newG();for(var k in b){if(G[k]===undefined)G[k]=b[k]}if(!hadRoot)G.rootId='';if(!G.flags)G.flags={};if(!G.flags.fresh)G.flags.rootChosen=1;if(!G.perm)G.perm={atk:0,def:0,hp:0};if(!hadMp)G.mp=mpmax();if(!G.furns)G.furns=[];if(G.sect=='danta'&&!G.furns.length){G.furns=['f1'];G.furn='f1'}if(G.furns.length&&!G.furn)G.furn=G.furns[G.furns.length-1];if(G.mp>mpmax())G.mp=mpmax();migEq();var dt=Math.min((Date.now()-(p.t||Date.now()))/1e3,28800);if(dt>15){var gg=rate()*dt*.6;G.qi+=gg;G.herb+=G.built.field*.05*dt*.5;G.ore+=G.built.mine*.04*dt*.5;G.age+=dt*.005;if(G.hp<hmax())G.hp=hmax();say('你自入定中醒来，已过'+Math.floor(dt/60)+'分钟，修为+'+fs(gg)+'。','bb');if(dt>=300)OFFG={m:Math.floor(dt/60),qi:Math.round(gg),herb:Math.floor(G.built.field*.05*dt*.5),ore:Math.floor(G.built.mine*.04*dt*.5)}}return 1}catch(e){return 0}}
+function load(){try{var r=localStorage.getItem(KEY);if(!r)return 0;var p=JSON.parse(r);if(!p.g)return 0;G=p.g;var hadRoot=p.g.rootId!==undefined;var hadMp=p.g.mp!==undefined;var b=newG();for(var k in b){if(G[k]===undefined)G[k]=b[k]}if(!hadRoot)G.rootId='';if(!G.flags)G.flags={};if(!G.flags.fresh)G.flags.rootChosen=1;if(!G.perm)G.perm={atk:0,def:0,hp:0};if(!hadMp)G.mp=mpmax();if(!G.furns)G.furns=[];if(G.sect=='danta'&&!G.furns.length){G.furns=['f1'];G.furn='f1'}if(G.furns.length&&!G.furn)G.furn=G.furns[G.furns.length-1];if(G.mp>mpmax())G.mp=mpmax();migEq();var dt=Math.min((Date.now()-(p.t||Date.now()))/1e3,28800);if(dt>15){var gg=rate()*dt*.6;G.qi+=gg;G.herb+=G.built.field*.05*dt*.5;G.ore+=G.built.mine*.04*dt*.5;G.age+=dt*.005;if(G.age>=G.life&&!G.ended){var i3=G.ins+3,b3=G.bone+2,g4=G.gen+1,ac3=G.ach,st3=G.stat;G=newG();G.gen=g4;G.ins=i3;G.bone=b3;G.ach=ac3;G.stat=st3;G.hp=hmax();G.mp=mpmax();G.star=1;OFFREB=g4;if(g4>=2)grantFurn('f5','轮回馈赠')}else{if(G.hp<hmax())G.hp=hmax();say('你自入定中醒来，已过'+Math.floor(dt/60)+'分钟，修为+'+fs(gg)+'。','bb');if(dt>=300)OFFG={m:Math.floor(dt/60),qi:Math.round(gg),herb:Math.floor(G.built.field*.05*dt*.5),ore:Math.floor(G.built.mine*.04*dt*.5)}}}return 1}catch(e){return 0}}
 
 ;
 var EV=`
@@ -816,10 +822,11 @@ function brkFX(kind){
 }
 function top(){
  $('qr').textContent=G.ended?ENDS[G.ended][0]:(R[G.realm]+SB[G.sub]);
- $('qage').textContent=Math.floor(G.age);$('qlife').textContent=G.life;$('qgen').textContent=G.gen;
+ $('qage').textContent=Math.floor(G.age);$('qlife').textContent=G.life;
+ try{$('qlife').style.color=(!G.ended&&G.life-G.age<=10)?'#e06c5b':''}catch(e){}$('qgen').textContent=G.gen;
  $('qst').textContent=fs(G.stone);$('qpw').textContent=fs(pw());
- $('qq').style.width=Math.max(0,Math.min(100,G.qi/nq()*100))+'%';$('qqt').textContent=fs(G.qi)+'/'+fs(nq());
- $('qh').style.width=Math.max(0,Math.min(100,G.hp/hmax()*100))+'%';$('qht').textContent=fs(G.hp)+'/'+fs(hmax());
+ $('qq').style.width=Math.max(0,Math.min(100,G.qi/nq()*100))+'%';$('qqt').textContent=fs(G.qi)+'/'+fs(nq())+(G.qi>=nq()?' 已满':'');
+ $('qh').style.width=Math.max(0,Math.min(100,G.hp/hmax()*100))+'%';$('qht').textContent=fs(Math.min(G.hp,hmax()))+'/'+fs(hmax());
  $('qd').style.width=Math.max(0,Math.min(100,G.dao))+'%';
  $('qdt').textContent=G.dao+(G.dao>=70?' 澄明':G.dao>=30?' 尚可':' 浮动');
  if($('qmp')){$('qmp').style.width=Math.max(0,Math.min(100,(G.mp||0)/mpmax()*100))+'%';$('qmpt').textContent=fs(Math.max(0,Math.floor(G.mp||0)))+'/'+fs(mpmax())}
@@ -916,7 +923,7 @@ function choose(i){
  for(var k=0;k<EVS.length;k++){if(EVS[k].id===id){e=EVS[k];break}}
  if(!e)return;
  var o=e.o[i];if(!o)return;
- eff(o.e);
+ eff(o.e);if(!G.evLog)G.evLog=[];G.evLog.unshift(e.n+' —— '+(o.r||o.t||''));if(G.evLog.length>8)G.evLog.length=8;
  ov.innerHTML='<h5>'+e.n+'</h5><div class="tx">'+(o.r||'')+'</div><button class="op" data-close="1">继续</button>';
  top();save();
 }
@@ -937,6 +944,7 @@ function render(){
  top();
 }
 function nextTip(){
+ if(!G.ended&&G.life-G.age<=10)return['寿元将尽（余 '+Math.max(1,Math.ceil(G.life-G.age))+' 年）：备好延寿丹，或抓紧冲关、安排转世——寿尽会自动轮回，成就与统计保留。','bio'];
  if(G.sect&&G.sectTask){var td=null;STASKS.forEach(function(x){if(x.id==G.sectTask.id)td=x});if(td&&td.sec&&Date.now()-(G.sectTask.ts||0)>=td.sec*1000)return['巡山守夜已毕，回宗门交付任务领贡献。','sec']}
  if(G.qi>=nq()){
   if(G.sub>=2){if(!bigGate())return['修为已满，但大境界冲关需先通关本境秘境「'+gateMap()+'」的首领。','fgt'];return['修为已满，冲关条件已齐，去下方「冲关」吧。','']}
@@ -1139,6 +1147,7 @@ function secPage(){
 function exp(){
  var h='<div class="c"><h4>云游 <u>已历 '+G.stat.ev+' 事</u></h4><p>行走江湖，每一次停留都可能遇见一段因果。境界越高，所遇越奇。</p>';
  h+='<button class="b w mn" data-a="walk">出门云游</button></div>';
+ h+='<div class="c"><h4>际遇录 <u>最近 '+(G.evLog?G.evLog.length:0)+' 段</u></h4>'+((G.evLog&&G.evLog.length)?G.evLog.map(function(x){return '<p>'+x+'</p>'}).join(''):'<p>尚未留下际遇。出门云游，江湖自有故事等你。</p>')+'</div>';
  h+='<div class="c"><h4>近事</h4><div class="lgs">'+G.log.slice(-10).map(function(l){return '<p class="'+l[1]+'">'+l[0]+'</p>'}).join('')+'</div></div>';
  var ks=Object.keys(G.aff);
  if(ks.length){
@@ -1243,7 +1252,7 @@ var ENH_RATE=[95,92,88,84,78,70,62,54,46,38,30,24,18];
 function enhCost(lv){return{enh:1+Math.floor(lv/4),ore:4+lv*2,stone:8+lv*6,ht:lv>=9?lv-8:0}}
 function enhRisk(lv){if(lv<=3)return'失败无惩罚，仅消耗材料。';if(lv<=6)return'失败保留当前等级。';if(lv<=9)return'失败有 20% 概率掉 1 级。';return'⚠ 高风险：失败有 30% 概率掉 1 级、'+(lv>=12?'5%':'3%')+' 概率装备损坏消失！'}
 var SELLMAT={herb:{n:20,p:1,name:'灵草'},ore:{n:15,p:1,name:'玄铁'},enh:{n:1,p:2,name:'强化石'},ref:{n:1,p:4,name:'精炼石'},star:{n:1,p:15,name:'天星砂'},lz:{n:8,p:1,name:'灵芝'},ht:{n:6,p:1,name:'寒铁'},yd:{n:1,p:3,name:'妖丹'},sg:{n:2,p:1,name:'兽骨'},hy:{n:1,p:4,name:'寒玉'},hs:{n:1,p:4,name:'火髓'},js:{n:1,p:3,name:'金砂'},xc:{n:1,p:8,name:'星尘'},lwm:{n:1,p:5,name:'雷纹木'},hun:{n:1,p:6,name:'魂玉'},jy:{n:1,p:5,name:'剑意残片'},slz:{n:1,p:5,name:'舍利子'},ds:{n:2,p:1,name:'丹砂'},lq:{n:2,p:1,name:'灵泉水'},hx:{n:1,p:10,name:'地心火精'}};
-var MATS={lz:{n:'灵芝',src:'黑风岭起各图采集 · 宝箱',buy:25},ht:{n:'寒铁',src:'寒潭秘窟/万剑池/九幽魔渊采集',buy:30},yd:{n:'妖丹',src:'战斗掉落：野怪 15% · 精英必掉 · 首领 ×2',buy:45},sg:{n:'兽骨',src:'战斗掉落：野怪 20% · 精英 50% · 首领必掉',buy:12},hy:{n:'寒玉',src:'寒潭秘窟特产（采集/探索/宝箱）',buy:60},hs:{n:'火髓',src:'赤炎谷特产（采集/探索/宝箱）',buy:60},js:{n:'金砂',src:'流沙古漠特产（采集/探索/宝箱）',buy:40},xc:{n:'星尘',src:'碧落星墟特产（采集/探索/宝箱）',buy:120},lwm:{n:'雷纹木',src:'天外雷池特产（采集/探索/宝箱）',buy:80},hun:{n:'魂玉',src:'幽冥涧/九幽魔渊特产（采集/探索/宝箱）',buy:90},jy:{n:'剑意残片',src:'万剑池特产（采集/探索/宝箱）',buy:70},slz:{n:'舍利子',src:'寂灭佛窟特产（采集/探索/宝箱）',buy:70},ds:{n:'丹砂',src:'流沙古漠/赤炎谷采集副产 · 集市',buy:20},lq:{n:'灵泉水',src:'秘境休整时汲取 · 宝箱 · 集市',buy:15},hx:{n:'地心火精',src:'赤炎谷精英/首领掉落 · 宗门商店',buy:150}};
+var MATS={lz:{n:'灵芝',src:'黑风岭起各图采集 · 宝箱',buy:25},ht:{n:'寒铁',src:'寒潭秘窟/万剑池/九幽魔渊采集',buy:30},yd:{n:'妖丹',src:'战斗掉落：野怪 15% · 精英必掉 · 首领 ×2',buy:45},sg:{n:'兽骨',src:'战斗掉落：野怪 20% · 精英 50% · 首领必掉',buy:12},hy:{n:'寒玉',src:'寒潭秘窟特产（采集/探索/宝箱）',buy:60},hs:{n:'火髓',src:'赤炎谷特产（采集/探索/宝箱）',buy:60},js:{n:'金砂',src:'流沙古漠特产（采集/探索/宝箱）',buy:40},xc:{n:'星尘',src:'碧落星墟特产（采集/探索/宝箱）',buy:120},lwm:{n:'雷纹木',src:'天外雷池特产（采集/探索/宝箱）',buy:80},hun:{n:'魂玉',src:'幽冥涧/九幽魔渊特产（采集/探索/宝箱）',buy:90},jy:{n:'剑意残片',src:'万剑池特产（采集/探索/宝箱）',buy:70},slz:{n:'舍利子',src:'寂灭佛窟特产（采集/探索/宝箱）',buy:70},ds:{n:'丹砂',src:'黑风岭/寒潭秘窟少量 · 流沙古漠/赤炎谷采集副产 · 集市',buy:20},lq:{n:'灵泉水',src:'秘境休整时汲取 · 宝箱 · 集市',buy:15},hx:{n:'地心火精',src:'赤炎谷精英/首领掉落 · 宗门商店',buy:150}};
 var MATKEYS=['lz','ht','yd','sg','hy','hs','js','xc','lwm','hun','jy','slz','ds','lq','hx'];
 var SPMAP={3:'hy',4:'hun',5:'js',6:'hs',7:'xc',8:'jy',9:'slz',10:'hun',11:'lwm'};
 var HTMAPS=[3,8,10];
@@ -1325,7 +1334,7 @@ function eqDeltaHtml(it){
 }
 function sectName(id){var s=null;SECTS.forEach(function(x){if(x.id===id)s=x});return s?s.name:id}
 var MKTSTOCK=['jb','yj','tgu','jxb','xt','shh','xcj'];
-var PILLBUY={huichun:25,juqi:40,pojing:150,juqi2:220,cuiti:400,peiyuan:350};
+var PILLBUY={huichun:25,juqi:40,pojing:220,juqi2:220,cuiti:260,peiyuan:160};
 var FURNBUY={f1:{p:300,need:0},f2:{p:1500,need:2},f3:{p:5000,need:3}};
 function fameDisc(){return G.fame>=90?.85:G.fame>=60?.9:G.fame>=30?.95:1}
 function mktCost(b){return Math.max(1,Math.round(b*fameDisc()))}
@@ -1383,7 +1392,6 @@ function auctToday(){
  if(G.auct&&G.auct.day===day&&G.auct.done)return G.auct;
  var band=G.realm<=2?'宝':G.realm<=5?'仙':'神';
  var pool=NAMED.filter(function(n2){return n2.q===band&&!ownsNamed(n2.id)});
- if(!pool.length)pool=NAMED.filter(function(n2){return n2.q===band});
  if(!G.auct||G.auct.day!==day||G.auct.band!==band){
   if(!pool.length){G.auct={day:day,band:band,id:null,done:0};return G.auct}
   var nd=pool[day%pool.length];
@@ -1502,12 +1510,12 @@ function bio(){
 function act(a,i){
  var now=Date.now();
  if(a=='med'){
-  if(now<cd)return;cd=now+900;
+  if(now<cd){say('气息未平，稍待片刻（还剩 '+Math.ceil((cd-now)/1000)+' 秒）。','mm');render();save();return}cd=now+900;
   var g=rate()*3+rn(0,3);G.qi+=g;G.age+=.005;
   G.hp=Math.min(hmax(),G.hp+hmax()*.02);G.mp=Math.min(mpmax(),(G.mp||0)+Math.round(mpmax()*.1));
   say('吐纳一周天，修为+'+fs(g)+'，灵力回复 10%。','gr');
  }else if(a=='deep'){
-  if(now<cd)return;cd=now+10000;
+  if(now<cd){say('入定余韵未散，稍待片刻（还剩 '+Math.ceil((cd-now)/1000)+' 秒）。','mm');render();save();return}cd=now+10000;
   if(G.age+1>=G.life){say('寿元将尽，不敢再耗。','rr');render();save();return}
   var g2=rate()*35;G.qi+=g2;G.age+=1;G.hp=hmax();G.mp=mpmax();
   say('入定一年（现实冷却 10 秒），出关修为+'+fs(g2)+'。','bb');
@@ -1577,7 +1585,7 @@ function act(a,i){
    }
   }
  }else if(a=='walk'){
-  if(now<cd)return;cd=now+900;
+  if(now<cd){say('脚步未稳，稍待片刻（还剩 '+Math.ceil((cd-now)/1000)+' 秒）。','mm');render();save();return}cd=now+900;
   G.age+=.25;
   var e=pick();
   if(!e){say('山中无事，只闻风声。','mm')}else{showEv(e);render();save();return}
@@ -1610,7 +1618,7 @@ function act(a,i){
   G.sectTask=null;say('已放弃当前任务。','mm');
  }else if(a=='taskSubmit'){
   var td3=null;STASKS.forEach(function(x){if(G.sectTask&&x.id===G.sectTask.id)td3=x});
-  if(!td3||!taskDone(td3)){render();save();return}
+  if(!td3||!taskDone(td3)){if(td3){var hv3=td3.res?(td3.res=='herb'?G.herb:G.stone):(G.sectTask.prog||0);say('「'+td3.n+'」尚未完成：进度 '+hv3+' / '+td3.cnt+'，做完再来交付。','rr')}render();save();return}
   if(td3.res){if(td3.res=='herb')G.herb-=td3.cnt;else G.stone-=td3.cnt}
   var rw3=td3.rw+G.realm*2;G.contrib+=rw3;G.contribTot+=rw3;G.sectTasks++;G.sectTask=null;
   gainPop(['宗门贡献 +'+rw3+'（任务奖励）']);say('任务交付：贡献 +'+rw3+'（累计 '+fs(G.contribTot)+'）。','gr');
@@ -1624,7 +1632,8 @@ function act(a,i){
   gainPop(['功法《'+ba.n+'》（'+(CATN[ba.cat||'mag'])+'类 · 入门篇）']);
   say('功法阁兑换：《'+ba.n+'》参悟第一层（入门篇）。','oo');
  }else if(a=='shopBuy'){
-  var it2=SSHOP[+i];if(!it2||!shopOk(it2))return;
+  var it2=SSHOP[+i];if(!it2)return;
+  if(!shopOk(it2)){if(G.contrib<it2.cost)say('贡献不足：兑换「'+it2.n+'」需 '+it2.cost+' 贡献（现有 '+fs(G.contrib)+'）。','rr');else say('「'+it2.n+'」暂时无法兑换——或已拥有、或境界未到、或已达上限，看商店行的说明。','rr');render();save();return}
   G.contrib-=it2.cost;
   if(it2.kind=='pill'){G.pills[it2.id]=(G.pills[it2.id]||0)+1;gainPop(['丹药「'+it2.n+'」×1']);say('兑换「'+it2.n+'」成功，已放入背包。','bb')}
   else if(it2.kind=='stone'){G.stone+=100;gainPop(['灵石 +100']);say('兑换灵石 100。','bb')}
@@ -1694,7 +1703,7 @@ function act(a,i){
     else{G.enh-=c8.enh;G.ore-=c8.ore;G.stone-=c8.stone;if(c8.ht)G.ht-=c8.ht;
      var rt8=ENH_RATE[lv8];var bonus8='';
      if(a=='enhDoL'){if((G.star||0)>0){G.star--;rt8=Math.min(97,rt8+12);bonus8='（天星砂加持）'}}
-     if(Math.random()*100<rt8){it8.lv=lv8+1;say('强化成功'+bonus8+'！【'+it8.name+'】升至 +'+it8.lv+'，属性全面提升。','oo');showEqUp(i)}
+     if(Math.random()*100<rt8){it8.lv=lv8+1;G.stat.enh=(G.stat.enh||0)+1;say('强化成功'+bonus8+'！【'+it8.name+'】升至 +'+it8.lv+'，属性全面提升。','oo');showEqUp(i)}
      else{
       var destroyed8=false,dropped8=false;
       if(lv8>=10&&Math.random()*100<(lv8>=12?5:3))destroyed8=true;
@@ -1714,7 +1723,7 @@ function act(a,i){
     var lv9=it11.lv||0,c9=enhCost(lv9);
     if((G.enh||0)<c9.enh||G.ore<c9.ore||G.stone<c9.stone){stopR='材料耗尽';break}
     G.enh-=c9.enh;G.ore-=c9.ore;G.stone-=c9.stone;
-    if(Math.random()*100<ENH_RATE[lv9]){it11.lv=lv9+1;okN++}
+    if(Math.random()*100<ENH_RATE[lv9]){it11.lv=lv9+1;okN++;G.stat.enh=(G.stat.enh||0)+1}
     else{failN++;if(lv9>=7&&Math.random()*100<20){it11.lv=lv9-1;dropN++}}
    }
    say('连冲结束：【'+it11.name+'】现为 +'+(it11.lv||0)+'（成功 '+okN+' 次、失败 '+failN+' 次'+(dropN?'、掉级 '+dropN+' 次':'')+(stopR?'，因'+stopR+'停下':'')+'）。','oo');
@@ -1724,7 +1733,7 @@ function act(a,i){
   var it9=findInv(i);
   if(it9){
    if((G.ref||0)<1||G.stone<15){say('精炼需精炼石 ×1（有 '+(G.ref||0)+'）、灵石 15。精炼石打精英/首领、开宝箱，或在集市/宗门商店换。','rr');showEqUp(i)}
-   else{G.ref--;G.stone-=15;['atk','def','hp'].forEach(function(k){if(it9[k]>0)it9[k]=Math.max(1,Math.round(it9[k]*(0.8+Math.random()*0.45)))});say('精炼完成：【'+it9.name+'】基础属性刷新为 攻 '+it9.atk+' 防 '+it9.def+' 血 '+it9.hp+'（强化 +'+(it9.lv||0)+' 保留）。','oo');showEqUp(i)}
+   else{G.ref--;G.stone-=15;G.stat.enh=(G.stat.enh||0)+1;['atk','def','hp'].forEach(function(k){if(it9[k]>0)it9[k]=Math.max(1,Math.round(it9[k]*(0.8+Math.random()*0.45)))});say('精炼完成：【'+it9.name+'】基础属性刷新为 攻 '+it9.atk+' 防 '+it9.def+' 血 '+it9.hp+'（强化 +'+(it9.lv||0)+' 保留）。','oo');showEqUp(i)}
   }
  }else if(a=='buyEq'){
   var be2=SECEQ[i];var nd9=namedById(i);
@@ -1742,13 +1751,13 @@ function act(a,i){
  }else if(a=='mktBuy'){
   if(i=='huiling'){var c60=mktCost(60);if(G.stone>=c60){G.stone-=c60;G.pills.huiling=(G.pills.huiling||0)+1;gainPop(['回灵丹 +1']);say('在集市买下回灵丹 ×1。','bb')}else say('灵石不足。','rr')}
   else if(i=='huqi'){var c90=mktCost(90);if(G.stone>=c90){G.stone-=c90;G.pills.huqi=(G.pills.huqi||0)+1;gainPop(['护器丹 +1']);say('在集市买下护器丹 ×1——强化凶险时，它能护住你的装备。','bb')}else say('灵石不足。','rr')}
-  else if(i=='enh'){var c15=mktCost(15);if(G.stone>=c15){G.stone-=c15;G.enh=(G.enh||0)+1;gainPop(['强化石 +1']);say('在集市买下强化石 ×1。','bb')}}
-  else if(i=='ref'){var c40=mktCost(40);if(G.stone>=c40){G.stone-=c40;G.ref=(G.ref||0)+1;gainPop(['精炼石 +1']);say('在集市买下精炼石 ×1。','bb')}}
-  else if(i=='star'){if(G.realm<3){say('天星砂蕴星辰之力，元婴期前强买也无福消受。','rr')}else if(G.stone>=mktCost(300)){G.stone-=mktCost(300);G.star=(G.star||0)+1;gainPop(['天星砂 +1']);say('在集市买下天星砂 ×1——强化装备时 +12% 成功率。','bb')}}
+  else if(i=='enh'){var c15=mktCost(15);if(G.stone>=c15){G.stone-=c15;G.enh=(G.enh||0)+1;gainPop(['强化石 +1']);say('在集市买下强化石 ×1。','bb')}else say('灵石不足。','rr')}
+  else if(i=='ref'){var c40=mktCost(40);if(G.stone>=c40){G.stone-=c40;G.ref=(G.ref||0)+1;gainPop(['精炼石 +1']);say('在集市买下精炼石 ×1。','bb')}else say('灵石不足。','rr')}
+  else if(i=='star'){if(G.realm<3){say('天星砂蕴星辰之力，元婴期前强买也无福消受。','rr')}else if(G.stone>=mktCost(300)){G.stone-=mktCost(300);G.star=(G.star||0)+1;gainPop(['天星砂 +1']);say('在集市买下天星砂 ×1——强化装备时 +12% 成功率。','bb')}else say('灵石不足。','rr')}
   else if(PILLBUY[i]){var rc9=null;RECIPES.forEach(function(r){if(r.id===i)rc9=r});var cp9=mktCost(PILLBUY[i]);if(rc9&&rc9.need&&G.realm<rc9.need){say('此丹药力过盛，需'+R[rc9.need]+'期方可购买。','rr')}else if(rc9&&G.stone>=cp9){G.stone-=cp9;G.pills[i]=(G.pills[i]||0)+1;gainPop([rc9.n+' +1']);say('在集市买下'+rc9.n+' ×1。','bb')}else if(rc9)say('灵石不足。','rr')}
   else if(i=='f4'||i=='f5'){var fpr9=mktCost(i=='f4'?9000:20000);var fn9=i=='f4'?4:6;if(ownsFurn(i)){say('此炉你已有一鼎。','mm')}else if(G.realm<fn9){say('此炉非你当前境界所能驾驭，摊主摇头不卖。','rr')}else if(G.stone>=fpr9){G.stone-=fpr9;grantFurn(i,'集市特惠购入')}else say('灵石不足。','rr')}
   else if(MATS[i]){var cm=mktCost(MATS[i].buy);if(G.stone>=cm){G.stone-=cm;G[i]=(G[i]||0)+1;gainPop([MATS[i].n+' +1']);say('在集市买下'+MATS[i].n+' ×1。','bb')}else say('灵石不足。','rr')}
-  else{var nd9=namedById(i);if(nd9&&G.realm<(QREQ[nd9.q]||0)){say('此器品阶非你当前境界所能驾驭，摊主摇头不卖。','rr')}else{var pr9=mktPrice(i);if(pr9>0&&!ownsNamed(i)&&G.stone>=pr9){G.stone-=pr9;grantNamed(i,'集市购入');say('在集市购入名器，去装备页穿戴。','oo')}}}
+  else{var nd9=namedById(i);if(nd9&&G.realm<(QREQ[nd9.q]||0)){say('此器品阶非你当前境界所能驾驭，摊主摇头不卖。','rr')}else{var pr9=mktPrice(i);if(pr9>0&&ownsNamed(i))say('【'+nd9.n+'】你已拥有一件，不必重复购入。','mm');else if(pr9>0&&G.stone<pr9)say('灵石不足：【'+nd9.n+'】需 '+fs(pr9)+' 灵石（现有 '+fs(Math.floor(G.stone))+'）。','rr');else if(pr9>0){G.stone-=pr9;grantNamed(i,'集市购入');say('在集市购入名器，去装备页穿戴。','oo')}}}
  }else if(a=='sellEq'){
   var it10=findInv(i);
   if(it10&&G.eq[it10.slot]!==it10.id){var pr10=sellEqPrice(it10);G.inv=G.inv.filter(function(x){return x.id!==it10.id});G.stone+=pr10;say('出售【'+it10.name+'】，得灵石 '+pr10+'。','bb')}
@@ -1763,12 +1772,12 @@ function act(a,i){
   var b=null;BUILDS.forEach(function(x){if(x.id===i)b=x});
   if(!b)return;
   var l2=G.built[i],c2=Math.floor(b.base*Math.pow(1.75,l2));
-  if(l2>=b.max||G.stone<c2)return;
+  if(l2>=b.max){say(b.n+'已是最高等级，无需再扩建。','mm');render();save();return}
+  if(G.stone<c2){say('灵石不足：'+b.n+'升至 '+(l2+1)+' 级需 '+fs(c2)+' 灵石（现有 '+fs(Math.floor(G.stone))+'）。','rr');render();save();return}
   var ex2=bmc(b,l2+1);for(var ei=0;ei<ex2.length;ei++){if((G[ex2[ei][0]]||0)<ex2[ei][1]){say('材料不足：'+b.n+'升至 '+(l2+1)+' 级还需 '+matName(ex2[ei][0])+' '+ex2[ei][1]+'（有 '+(G[ex2[ei][0]]||0)+'）。','rr');render();save();return}}
   G.stone-=c2;ex2.forEach(function(e){G[e[0]]-=e[1]});G.built[i]=l2+1;
   say(b.n+'扩建至'+G.built[i]+'级。','bb');
- }else if(a=='fight'){fight(+i);return}
- else if(a=='enter'){enterMap(+i);return}
+ }else if(a=='enter'){enterMap(+i);return}
  else if(a=='exitMap'){if(MP){MP=null;ov.className='ov';ov.innerHTML='';ov.style.justifyContent='';say('你结束历练，退出秘境，所得收益都已保留。','bb')}render();save();return}
  else if(a=='alch'){startCraft(i);
  }else if(a=='furnBuy'){
@@ -1779,7 +1788,7 @@ function act(a,i){
   var n5=0;for(var k5=0;k5<5;k5++){var bf5=G.pills[i]||0;act('use',i);if((G.pills[i]||0)>=bf5)break;n5++}
   if(n5>0)say('连服完毕：共服下 '+n5+' 枚（耐药上限会自动拦停，不浪费）。','oo');
  }else if(a=='use'){
-  if(!(G.pills[i]>0))return;
+  if(!(G.pills[i]>0)){var unm='';RECIPES.forEach(function(x){if(x.id===i)unm=x.n});say((unm||'此丹')+'已服完，囊中无存货——可去丹器页炼制（丹塔）或在集市丹药摊购买。','rr');render();save();return}
   if(!G.perm)G.perm={atk:0,def:0,hp:0};
   if(!G.drug)G.drug={};
   var rsd=RESIST[i];
@@ -1817,8 +1826,6 @@ function act(a,i){
  }else if(a=='rootRe'){
   if(G.reroll>0){G.reroll--;setRoot(G,rollRoot())}
   showRootStart();save();return;
- }else if(a=='rootDraw'){
-  say('灵根既定，天意难改——重测灵根已暂时关闭。','rr');render();save();return;
  }else if(a=='rootAccept'){
   if(PR){setRoot(G,PR);PR=null;say('灵根已改为：'+rootDef().n+'（'+G.elem+'系），修炼 ×'+rootDef().rate.toFixed(2)+'。','oo')}
   ov.className='ov';ov.innerHTML='';render();save();return;
@@ -1869,6 +1876,7 @@ function act(a,i){
   if(!G.flags)G.flags={};G.flags.rsAsk=1;say('重开不可恢复，请再确认一次。','rr');
  }else if(a=='restartNo'){
   if(G.flags)delete G.flags.rsAsk;say('已取消重开，此世照旧。','oo');
+ }else if(a=='rebornOk'){showRootStart()
  }else if(a=='restartYes'){
   G=newG();B=null;MP=null;AL=null;cd=0;TB='cul';
   say('前尘尽散。你睁开眼，又回到青云山下——重新测灵定根吧。','oo');
@@ -1876,7 +1884,7 @@ function act(a,i){
  }else if(a=='reborn'){
   var gi=G.ins+3,gb=G.bone+2,gen=G.gen+1,ach=G.ach,stt=G.stat;
   G=newG();G.gen=gen;G.ins=gi;G.bone=gb;G.ach=ach;G.stat=stt;G.hp=hmax();G.mp=mpmax();if(gen>=2)grantFurn('f5','轮回馈赠');
-  say('真灵不灭，第'+gen+'世始于青云山下。前尘如烟，道基犹在。','oo');
+  say('真灵不灭，第'+gen+'世始于青云山下。前尘如烟，道基犹在——请重新测灵定根。','oo');showRootStart();
  }
  render();save();
 }
@@ -1968,6 +1976,7 @@ function moveTo(i){
   if(HTMAPS.indexOf(MP.idx)>=0){var ht2=rn(1,Math.max(1,Math.round(ob*.4)));G.ht=(G.ht||0)+ht2;_gp.push('寒铁 +'+ht2);_gt+='、寒铁 +'+ht2}
   var spk=SPMAP[MP.idx];if(spk){var spn=rn(1,2)+(MP.idx>=7?1:0);G[spk]=(G[spk]||0)+spn;_gp.push(MATS[spk].n+' +'+spn);_gt+='、'+MATS[spk].n+' +'+spn}
   if(MP.idx==5||MP.idx==6){var ds2=rn(1,3);G.ds=(G.ds||0)+ds2;_gp.push('丹砂 +'+ds2);_gt+='、丹砂 +'+ds2}
+  else if((MP.idx==2||MP.idx==3)&&Math.random()<.5){G.ds=(G.ds||0)+1;_gp.push('丹砂 +1');_gt+='、丹砂 +1'}
   mlog(_gt+'。');gainPop(_gp);
   if(Math.random()<.3){mlog('守药妖兽扑了出来！');startBattle(wildEnemy(MP.idx,0),MP.idx,'wild');if(!B)showMapOv();return}
  }else if(i==5){
@@ -2170,7 +2179,7 @@ function enemyTurn(){
  var m=B.m,heavy=(B.round%3==0);
  var dg=fxV('dodge')+fxV('dodgeLow')*(1-G.hp/hmax());
  if(Math.random()*100<dg){blog('你身形一晃，堪堪避过这一击！','bb');for(var k2 in B.cds){if(B.cds[k2]>0)B.cds[k2]--}B.round++;showBattle();save();return}
- var d=Math.max(1,m.atk*(0.8+Math.random()*.4)-def()*.24);
+ var rawD=m.atk*(0.8+Math.random()*.4);var d=Math.max(1,rawD-Math.min(def()*.24,rawD*.55));
  if(heavy)d*=1.55;
  if(B.eWeak){d*=1-B.eWeak;B.eWeak=0;blog('敌方攻势被化去大半，这一击软绵无力。','bb')}
  if(B.guard){d*=0.35;B.guard=0;blog('你运功防御，只受了轻伤。','bb')}
@@ -2234,7 +2243,7 @@ function battleAct(kind,id){
   var a=null;ARTS.forEach(function(x){if(x.id===id)a=x});if(!a)return;
   if(a.cat=='pas'){blog('《'+a.n+'》是被动功法，只增属性，不能用于出手。','rr');B.view='main';showBattle();return}
   var l=G.arts[a.id]||0;if(l<=0)return;
-  if((B.cds[a.id]||0)>0)return;
+  if((B.cds[a.id]||0)>0){blog('《'+a.n+'》尚在调息，还需 '+B.cds[a.id]+' 回合。','rr');B.view='main';showBattle();save();return}
   var mc=Math.max(1,Math.round(mpCostSkill(a)*(1-fxV('mpCost')/100)));if(fxHas('skillFree')&&Math.random()*100<fxV('skillFree')){mc=0;blog('流云踏月，本次施展不耗灵力！','oo')}if((G.mp||0)<mc){blog('灵力不足，施展《'+a.n+'》需灵力 '+mc+'。','rr');B.view='main';showBattle();return}
   G.mp-=mc;B.cds[a.id]=Math.max(1,skillCd(a)-((a.cat||'mag')=='mov'?1+fxV('movCd'):0)-fxV('cdAll'));B.view='main';
   var acat=a.cat||'mag';
@@ -2254,7 +2263,7 @@ function battleAct(kind,id){
   playerHit(dm,'你施展《'+a.n+'》'+mvName);return;
  }
  if(kind=='pill'){
-  if(!(G.pills[id]>0))return;
+  if(!(G.pills[id]>0)){var bpn={huichun:'回春丹',juqi:'初级聚气丹',huiling:'回灵丹'}[id]||'丹药';blog(bpn+'已用完，囊中无存货。','rr');B.view='main';showBattle();save();return}
   G.pills[id]--;B.view='main';
   if(id=='huichun'){G.hp=hmax();blog('你服下回春丹，气血尽复。','gr')}
   else if(id=='juqi'){var hh=Math.floor(hmax()*0.2);G.hp=Math.min(hmax(),G.hp+hh);B.buff=1;blog('你服下初级聚气丹，回复气血 '+fs(hh)+'，下一次攻击 +50%。','gr')}
@@ -2327,8 +2336,8 @@ function tick(){
   if(G.demon>=100){G.ended='end_demon';say('魔性冲顶，你已非人。','rr');TB='bio';render()}
   if(G.age>=G.life){
    var i2=G.ins+3,b2=G.bone+2,g3=G.gen+1,ach=G.ach,stt=G.stat;
-   G=newG();G.gen=g3;G.ins=i2;G.bone=b2;G.ach=ach;G.stat=stt;G.hp=hmax();G.mp=mpmax();G.star=1;
-   say('大限已至，真灵入轮回。此为第'+g3+'世。','oo');render();
+   G=newG();G.gen=g3;G.ins=i2;G.bone=b2;G.ach=ach;G.stat=stt;G.hp=hmax();G.mp=mpmax();G.star=1;MP=null;B=null;AL=null;if(g3>=2)grantFurn('f5','轮回馈赠');
+   say('大限已至，真灵入轮回。此为第'+g3+'世——成就与统计保留，悟性、根骨已按轮回规则提升，请重新测灵定根。','oo');render();showRootStart();
   }
   if(++achT%2===0){if(achChk())render()}
  }
@@ -2341,7 +2350,8 @@ if(load())say('道途续行。','mm');
 else{say('你自凡尘中睁眼，灵气在经脉里第一次流转。','oo');say('点「打坐吐纳」积累修为，修为满后「冲关」精进。','mm')}
 achChk();
 render();
-if(!G.flags.rootChosen)showRootStart();
+if(OFFREB){ov.innerHTML='<h5>寿元已尽 · 真灵轮回</h5><div class="tx">离线期间，你的上一世在入定中耗尽寿元、安然坐化，真灵已入轮回——此为第'+OFFREB+'世。<br><br>这不是存档丢失：成就与历练统计保留，悟性 +3、根骨 +2 已计入新一世；境界、装备、灵石等按转世规则重新开始。</div><button class="op" data-a="rebornOk">入轮回 · 重测灵根</button>';ov.className='ov on';top()}
+else if(!G.flags.rootChosen)showRootStart();
 else if(OFFG){ov.innerHTML='<h5>离线修炼结算</h5><div class="tx">你离线了约 '+(OFFG.m>=60?(Math.floor(OFFG.m/60)+' 小时 '+(OFFG.m%60)+' 分钟'):OFFG.m+' 分钟')+'，道身自行吐纳不辍：<br>修为 +'+fs(OFFG.qi)+'<br>灵草 +'+OFFG.herb+' · 玄铁 +'+OFFG.ore+'<br>气血已回满。灵石不会离线产出（灵石新政）。</div><button class="op" data-close="1">收下</button>';ov.className='ov on';top()}
 setTimeout(updCheck,2500);
 setInterval(tick,1000);
