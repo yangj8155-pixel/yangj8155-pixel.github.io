@@ -346,20 +346,20 @@ var MAPS=[
 {n:'天外雷池',lv:10,hp:14000,atk:720,def:260,rec:8100,e:'金',boss:'雷帝法身',st:[2400,5000],hr:[30,60],or:[40,80],wild:['雷池电鳗','天雷妖灵','引雷石像'],elite:'雷帝侍从',nodes:['雷池入口','引雷峰','雷击原','雷云栈道','雷铁矿脉','避雷古塔','雷帝前殿','雷核宝库','雷帝法身座'],d:'雷霆为水，天威为岸。'}
 ];
 var RECIPES=[
-{id:'juqi',n:'初级聚气丹',d:'服下立刻获得修为 +150。固定药力：无服用上限、无耐药衰减，嗑多少涨多少。',cost:{herb:3,ore:0,stone:0},use:1,t:'凡'},
-{id:'juqi2',n:'中级聚气丹',d:'服下立刻获得修为 +450。固定药力：无服用上限、无耐药衰减。金丹期可炼。',cost:{herb:6,ore:1,stone:30},use:1,need:2,t:'玄'},
-{id:'juqi3',n:'高级聚气丹',d:'服下立刻获得修为 +1200。固定药力：无服用上限、无耐药衰减。化神期可炼。',cost:{herb:12,ore:3,stone:90},use:1,need:4,t:'地'},
-{id:'huqi',n:'护器丹',d:'强化装备失败将掉级或损坏时，自动消耗一枚抵消惩罚（连冲不触发）。金丹期可炼，集市亦有售。',cost:{herb:8,ore:2,stone:40},need:2,t:'玄',note:'强化时自动护器'},
+{id:'juqi',n:'初级聚气丹',d:'服下立刻获得修为 +150。固定药力：无服用上限、无耐药衰减，嗑多少涨多少。',cost:{herb:3},use:1,t:'凡'},
+{id:'juqi2',n:'中级聚气丹',d:'服下立刻获得修为 +450。固定药力：无服用上限、无耐药衰减。金丹期可炼。',cost:{herb:4,lz:2,yd:1,stone:30},use:1,need:2,t:'玄'},
+{id:'juqi3',n:'高级聚气丹',d:'服下立刻获得修为 +1200。固定药力：无服用上限、无耐药衰减。化神期可炼。',cost:{herb:6,lz:5,yd:2,hy:1,stone:90},use:1,need:4,t:'地'},
+{id:'huqi',n:'护器丹',d:'强化装备失败将掉级或损坏时，自动消耗一枚抵消惩罚（连冲不触发）。金丹期可炼，集市亦有售。',cost:{herb:6,ore:2,yd:1,stone:40},need:2,t:'玄',note:'强化时自动护器'},
 {id:'huichun',n:'回春丹',d:'气血尽复，久战必备。',cost:{herb:2,ore:1,stone:0},use:1},
-{id:'pojing',n:'破境丹',d:'突破时自动服用，成功率 +18%。',cost:{herb:6,ore:2,stone:40},use:0},
+{id:'pojing',n:'破境丹',d:'突破时自动服用，成功率 +18%。',cost:{herb:5,lz:2,yd:1,stone:40},use:0},
 {id:'xisui',n:'洗髓丹',d:'洗炼经脉，悟性 +1。',cost:{herb:8,ore:4,stone:80},use:1,off:1},
-{id:'dujie',n:'渡劫丹',d:'天劫护体，冲关成功率 +35%。',cost:{herb:14,ore:8,stone:160},use:0},
-{id:'cuiti',n:'淬体丹',d:'服下永久根骨 +1（攻击、防御、气血都会随之提升）。',cost:{herb:6,ore:3,stone:60},use:1},
-{id:'peiyuan',n:'培元丹',d:'服下永久气血上限 +40。',cost:{herb:5,ore:2,stone:50},use:1},
-{id:'pojun',n:'破军丹',d:'服下永久攻击 +8。',cost:{herb:6,ore:4,stone:90},use:1},
-{id:'jingang',n:'金刚丹',d:'服下永久防御 +6。',cost:{herb:4,ore:6,stone:70},use:1},
-{id:'xuelian',n:'血莲丹',d:'服下永久气血上限 +90。',cost:{herb:10,ore:4,stone:150},use:1},
-{id:'tiangang',n:'天罡丹',d:'服下永久攻击 +16、防御 +10。',cost:{herb:12,ore:8,stone:280},use:1},
+{id:'dujie',n:'渡劫丹',d:'天劫护体，冲关成功率 +35%。',cost:{lz:8,ore:4,yd:3,slz:1,xc:1,stone:160},use:0},
+{id:'cuiti',n:'淬体丹',d:'服下永久根骨 +1（攻击、防御、气血都会随之提升）。',cost:{herb:5,sg:2,yd:1,stone:60},use:1},
+{id:'peiyuan',n:'培元丹',d:'服下永久气血上限 +40。',cost:{herb:4,sg:2,stone:50},use:1},
+{id:'pojun',n:'破军丹',d:'服下永久攻击 +8。',cost:{herb:5,ore:3,yd:1,stone:90},use:1},
+{id:'jingang',n:'金刚丹',d:'服下永久防御 +6。',cost:{herb:3,ore:5,sg:2,stone:70},use:1},
+{id:'xuelian',n:'血莲丹',d:'服下永久气血上限 +90。',cost:{herb:8,lz:3,hun:1,stone:150},use:1},
+{id:'tiangang',n:'天罡丹',d:'服下永久攻击 +16、防御 +10。',cost:{lz:6,ore:6,yd:3,hun:1,stone:280},use:1},
 {id:'xiling',n:'洗灵丹',d:'灵根既定，此丹暂时封存。',cost:{herb:9,ore:5,stone:120},use:0,note:'暂时封存',off:1},
 {id:'huiling',n:'回灵丹',d:'回复 50% 灵力。战斗内外皆可服用（灵力不靠打坐自动回复，只能靠丹药与调息）。',cost:{herb:4,ore:1,stone:30},use:1}
 ];
@@ -581,13 +581,13 @@ function gateMap(){for(var i=0;i<MAPS.length;i++)if(MAPS[i].lv==G.realm)return M
 function alchRate(){return Math.min(.95,.55+G.ins*.02+G.built.furnace*.04+sbon('alch'))}
 function say(t,c){G.log.push([t,c||'mm']);if(G.log.length>80)G.log.shift()}
 function newG(){
- var g={root:'黄',elem:'金',rootId:'',realm:0,sub:0,qi:0,hp:100,age:16,life:90,stone:40,herb:0,ore:0,ins:5,bone:5,contrib:0,luck:0,dao:0,karma:0,demon:0,fame:0,gen:1,ended:0,ch:0,flags:{fresh:1},aff:{},pets:[],arts:{yq:1},eq:{weapon:null,fabao:null,clothes:null,armor:null,pants:null,head:null,boots:null,acc:null},inv:[],eqSeq:1,built:{array:0,field:0,mine:0,furnace:0,forge:0},pills:{juqi:3,juqi2:0,juqi3:0,huqi:0,huichun:1,pojing:0,xisui:0,dujie:0,cuiti:1,peiyuan:0,pojun:0,jingang:0,xuelian:0,tiangang:0,xiling:0,huiling:0},once:{},ach:{},cleared:{},log:[],stat:{brk:0,fail:0,pill:0,forge:0,win:0,lose:0,ev:0},perm:{atk:0,def:0,hp:0},reroll:5,sect:null,drug:{},frag:{},mp:42,enh:0,ref:0,star:0,srank:0,contribTot:0,sectTasks:0,sectTask:null,sectBan:{},sectCult:0,sectArtProg:0};
+ var g={root:'黄',elem:'金',rootId:'',realm:0,sub:0,qi:0,hp:100,age:16,life:90,stone:40,herb:0,ore:0,ins:5,bone:5,contrib:0,luck:0,dao:0,karma:0,demon:0,fame:0,gen:1,ended:0,ch:0,flags:{fresh:1},aff:{},pets:[],arts:{yq:1},eq:{weapon:null,fabao:null,clothes:null,armor:null,pants:null,head:null,boots:null,acc:null},inv:[],eqSeq:1,built:{array:0,field:0,mine:0,furnace:0,forge:0},pills:{juqi:3,juqi2:0,juqi3:0,huqi:0,huichun:1,pojing:0,xisui:0,dujie:0,cuiti:1,peiyuan:0,pojun:0,jingang:0,xuelian:0,tiangang:0,xiling:0,huiling:0},once:{},ach:{},cleared:{},log:[],stat:{brk:0,fail:0,pill:0,forge:0,win:0,lose:0,ev:0},perm:{atk:0,def:0,hp:0},reroll:5,sect:null,drug:{},frag:{},mp:42,enh:0,ref:0,star:0,lz:0,ht:0,yd:0,sg:0,hy:0,hs:0,js:0,xc:0,lwm:0,hun:0,jy:0,slz:0,srank:0,contribTot:0,sectTasks:0,sectTask:null,sectBan:{},sectCult:0,sectArtProg:0};
  setRoot(g,rollRoot());
  return g;
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({g:G,t:Date.now()}))}catch(e){SAVE_OK=0}}
 function checkStore(){try{localStorage.setItem('qx_merge_test','1');var v=localStorage.getItem('qx_merge_test');localStorage.removeItem('qx_merge_test');SAVE_OK=(v==='1')?1:0}catch(e){SAVE_OK=0}}
-var APP_VER='1.24';
+var APP_VER='1.25';
 var UPD_FEED='https://annuel.framapad.org/p/xiuxian-ver-839201/export/txt';
 var UPD_PAGE='https://muse.ai/s/xiu-xian-wen-dao-iphone-zhu-ping-mu-xtxa6xlxjxtjxubaxn/ZoHtkV6WZ6hnaSFnyc-ViFRS4ubfr8kQ-UJid-_1P8I';
 function verCmp(a,b){a=(''+a).split('.');b=(''+b).split('.');for(var i=0;i<3;i++){var x=parseInt(a[i]||'0',10),y=parseInt(b[i]||'0',10);if(x!==y)return x>y?1:-1}return 0}
@@ -850,6 +850,8 @@ function nextTip(){
  if((G.mp||0)<mpmax()*.2)return['灵力将尽：可服回灵丹、闭关调息（本页下方），或去集市买回灵丹。',''];
  if(G.hp<hmax()*.3)return['气血不足三成，先打坐恢复或服回春丹再出门历练。',''];
  if(G.sub>=2&&!bigGate())return['本境大关在即：先去通关秘境「'+gateMap()+'」的首领，冲关才不会被拦。','fgt'];
+ if(G.realm>=1&&(G.yd||0)==0)return['妖丹告罄：炼丹离不开妖丹——秘境野怪 15% 掉落、精英必掉、首领 ×2，宗门商店（15 贡献）与集市（45 灵石）也能换。','fgt'];
+ if(G.realm>=2&&(G.lz||0)==0)return['灵芝见底：中高阶丹药要吃灵芝，黑风岭起每张图的采集点都有产出，宗门商店 8 贡献一株。','fgt'];
  return null;
 }
 function guideHtml(){var t=nextTip();if(!t)return '';return '<div class="c" style="border-color:#8b6d3a"><h4>道途指引</h4><p>'+t[0]+'</p>'+(t[1]?'<button class="b sm mn" data-t="'+t[1]+'" style="margin-top:5px">前往</button>':'')+'</div>'}
@@ -884,9 +886,9 @@ function cul(){
 function cav(){
  var h='<div class="c"><h4>洞府 <u>灵气自生</u></h4><p>每秒产出灵草 '+(G.built.field*.05).toFixed(2)+'、玄铁 '+(G.built.mine*.04).toFixed(2)+'，聚灵阵使修炼 +'+Math.round(G.built.array*32)+'%。</p></div>';
  BUILDS.forEach(function(b){
-  var l=G.built[b.id],c=Math.floor(b.base*Math.pow(1.75,l)),full=l>=b.max;
-  h+='<div class="c"><h4>'+b.n+' <u>'+l+' / '+b.max+'</u></h4><div class="rw"><div><p>'+b.d(l)+'</p></div>';
-  h+='<button class="b sm '+((full||G.stone<c)?'x':'')+'" data-a="build" data-i="'+b.id+'">'+(full?'已满':'升级 '+fs(c))+'</button></div></div>';
+  var l=G.built[b.id],c=Math.floor(b.base*Math.pow(1.75,l)),full=l>=b.max;var ex=bmc(b,l+1);var exOk=ex.every(function(e){return (G[e[0]]||0)>=e[1]});
+  h+='<div class="c"><h4>'+b.n+' <u>'+l+' / '+b.max+'</u></h4><div class="rw"><div><p>'+b.d(l)+'</p>'+(full?'':('<p>升级需灵石 '+fs(c)+(ex.length?(' · '+ex.map(function(e){return matName(e[0])+' '+e[1]+'（有 '+(G[e[0]]||0)+'）'}).join(' · ')):'')+'</p>'))+'</div>';
+  h+='<button class="b sm '+((full||G.stone<c||!exOk)?'x':'')+'" data-a="build" data-i="'+b.id+'">'+(full?'已满':'升级')+'</button></div></div>';
  });
  return h;
 }
@@ -907,15 +909,15 @@ function art(){
   list.forEach(function(a){
    var l=G.arts[a.id]||0;
    var frozen=G.sect!==a.sect&&l>0;
-   var uc=l>0&&l<5?upCost(l):0;
+   var uc=l>0&&l<5?upCost(l):0;var um3=l>0&&l<5?upMat(l,a):null;
    h+='<div class="rw" style="margin-bottom:6px"><div>';
    h+='<p><b style="color:#f2d79b;font-weight:400">'+a.n+'</b> '+a.t+'阶 · '+(CATN[a.cat||'mag'])+'类'+(a.elem?' · '+a.elem+'属性':'')+(l?' · '+l+' 层 '+CHAP[l-1]:' · 未习')+'</p>';
    h+='<p>'+a.d+'</p><p>修炼 +'+Math.round(a.rate*100)+'% 攻 +'+a.atk+' 防 +'+a.def+' 血 +'+a.hp+'</p>';
    if(l==0){var sd0=sectDef(a.sect);if(sd0&&sd0.art===a.id)h+='<p>镇派功法：晋升宗主亲传弟子后，由宗主亲授</p>';else if(sd0&&sd0.basic===a.id)h+='<p>基础功法：拜入'+sd0.name+'即授</p>';else if(a.gate!==undefined)h+='<p>功法阁兑换：'+SRANKS[a.gate]+'起，以 '+a.ccost+' 贡献参悟（见宗门页）</p>';else h+='<p>宗门功法（见宗门页）</p>'}
    else if(frozen)h+='<p>叛门保留 · 非本门时冻结，不可精进</p>';
-   else if(l<5)h+='<p>精进需修为 '+fs(uc)+' · 灵石 '+upStone(l,a)+' · 灵草 '+upHerb(l)+'（当前修为 '+fs(Math.floor(G.qi))+'）</p>';
+   else if(l<5)h+='<p>精进需修为 '+fs(uc)+' · 灵石 '+upStone(l,a)+' · 灵草 '+upHerb(l)+(um3?(' · '+matName(um3.k)+' '+um3.n):'')+'（当前修为 '+fs(Math.floor(G.qi))+'）</p>';
    h+='</div>';
-   if(l>0&&l<5)h+='<button class="b sm '+((frozen||G.realm<a.need||G.qi<uc||G.stone<upStone(l,a)||G.herb<upHerb(l))?'x':'')+'" data-a="art" data-i="'+a.id+'">参悟精进</button>';
+   if(l>0&&l<5)h+='<button class="b sm '+((frozen||G.realm<a.need||G.qi<uc||G.stone<upStone(l,a)||G.herb<upHerb(l)||(um3&&(G[um3.k]||0)<um3.n))?'x':'')+'" data-a="art" data-i="'+a.id+'">参悟精进</button>';
    else if(l>=5)h+='<span style="font-size:10px;color:#8b93a2;flex:none">已圆满</span>';
    h+='</div>';
   });
@@ -946,7 +948,9 @@ var SSHOP=[
 {n:'随机装备',d:'随机部位一件，品质看运气（有机会出仙品）',cost:80,kind:'eq'},
 {n:'吸星大法 · 秘籍',d:'吸纳术秘籍：施展时吸取敌方灵力（宝库秘藏，限购一次）',cost:200,kind:'art',id:'xxd'},
 {n:'强化石',d:'装备强化材料',cost:10,kind:'mat',id:'enh'},
-{n:'精炼石',d:'装备精炼材料',cost:25,kind:'mat',id:'ref'}
+{n:'精炼石',d:'装备精炼材料',cost:25,kind:'mat',id:'ref'},
+{n:'灵芝',d:'中高阶丹药主材（黑风岭起各图采集）',cost:8,kind:'mat',id:'lz'},
+{n:'妖丹',d:'炼丹核心材料，妖兽内丹（战斗掉落）',cost:15,kind:'mat',id:'yd'}
 ];
 function shopOk(it){
  if(G.contrib<it.cost)return 0;
@@ -1043,11 +1047,11 @@ function exp(){
  return h;
 }
 function fgt(){
- var h='<div class="c"><h4>秘境</h4><p>气血 '+fs(G.hp)+'/'+fs(hmax())+' · 战力 '+fs(pw())+'。伤势需打坐恢复。</p><p>回合制战斗：每回合由你选择普攻、用已习功法、吃药、防御调息或逃跑；敌方每第 3 回合会蓄势重击。五行相克伤害 +30%。点「进入地图」会跳转到该图的独立页面：沿流程图探索、采集、休整、开宝箱、战精英、挑战首领，随时可退出返回列表。战斗与宝箱有几率掉落功法残页（集齐 5 张合成完整功法），精英与首领还有小概率直接掉完整功法。</p></div>';
+ var h='<div class="c"><h4>秘境</h4><p>气血 '+fs(G.hp)+'/'+fs(hmax())+' · 战力 '+fs(pw())+'。伤势需打坐恢复。</p><p>回合制战斗：每回合由你选择普攻、用已习功法、吃药、防御调息或逃跑；敌方每第 3 回合会蓄势重击。五行相克伤害 +30%。点「进入地图」会跳转到该图的独立页面：沿流程图探索、采集、休整、开宝箱、战精英、挑战首领，随时可退出返回列表。战斗与宝箱有几率掉落功法残页（集齐 5 张合成完整功法），精英与首领还有小概率直接掉完整功法。野怪、精英、首领会掉妖丹与兽骨——炼丹、炼体与洞府扩建都要用到；每张图的采集点还出本地特产，进图前看下方「产出」一行便知去哪刷什么。</p></div>';
  MAPS.forEach(function(m,i){
   var lk=G.realm<m.lv;
   h+='<div class="c"><h4>'+m.n+' <u>'+(lk?'需'+R[m.lv]:'可入')+'</u></h4><div class="rw"><div>';
-  h+='<p>'+m.d+'</p><p>首领 '+m.boss+' · 气血 '+fs(Math.round(m.hp*1.9))+' · 已通关 '+(G.cleared[i]||0)+' 次</p><p>推荐战力 '+fs(m.rec)+' · 你 '+fs(pw())+' <span style="color:'+(pw()>=m.rec*1.2?'#8fd8a8':pw()>=m.rec*.75?'#f2d79b':'#e2847c')+'">'+(pw()>=m.rec*1.2?'占优':pw()>=m.rec*.75?'可战':'危险')+'</span></p></div>';
+  h+='<p>'+m.d+'</p><p>产出：灵草、玄铁'+(i>=2?'、灵芝':'')+(HTMAPS.indexOf(i)>=0?'、寒铁':'')+(SPMAP[i]?('、'+MATS[SPMAP[i]].n+'（特产）'):'')+' · 妖兽掉妖丹、兽骨</p><p>首领 '+m.boss+' · 气血 '+fs(Math.round(m.hp*1.9))+' · 已通关 '+(G.cleared[i]||0)+' 次</p><p>推荐战力 '+fs(m.rec)+' · 你 '+fs(pw())+' <span style="color:'+(pw()>=m.rec*1.2?'#8fd8a8':pw()>=m.rec*.75?'#f2d79b':'#e2847c')+'">'+(pw()>=m.rec*1.2?'占优':pw()>=m.rec*.75?'可战':'危险')+'</span></p></div>';
   h+='<button class="b sm '+((lk||G.ended)?'x':'')+'" data-a="enter" data-i="'+i+'">进入地图</button></div></div>';
  });
  return h;
@@ -1055,9 +1059,9 @@ function fgt(){
 function alc(){
  var h='<div class="c"><h4>炼丹 <u>成丹率 '+Math.round(alchRate()*100)+'%</u></h4><p>丹房提升成丹率与药效，失败则材料尽毁。淬体、破军、金刚、培元、血莲、天罡丹服下永久加属性，是补战力的捷径。</p></div>';
  RECIPES.forEach(function(r){
-  var ok=G.herb>=r.cost.herb&&G.ore>=(r.cost.ore||0)&&G.stone>=(r.cost.stone||0)&&(!r.need||G.realm>=r.need);
+  var ok=costOk(r.cost)&&(!r.need||G.realm>=r.need);
   h+='<div class="c"><h4>'+r.n+' <u>存 '+(G.pills[r.id]||0)+'</u></h4><div class="rw"><div>';
-  h+='<p>'+r.d+'</p>'+(drugTxt(r.id)?'<p style="color:#f2d79b">'+drugTxt(r.id)+'</p>':'')+'<p>需 灵草'+r.cost.herb+(r.cost.ore?' 玄铁'+r.cost.ore:'')+(r.cost.stone?' 灵石'+r.cost.stone:'')+(r.need?(' · <span style="color:'+(G.realm>=r.need?'#8fd8a8':'#e08a8a')+'">'+R[r.need]+'期可炼</span>'):'')+'</p></div>';
+  h+='<p>'+r.d+'</p>'+(drugTxt(r.id)?'<p style="color:#f2d79b">'+drugTxt(r.id)+'</p>':'')+'<p>需 '+costTxt(r.cost)+(r.need?(' · <span style="color:'+(G.realm>=r.need?'#8fd8a8':'#e08a8a')+'">'+R[r.need]+'期可炼</span>'):'')+'</p></div>';
   h+='<div style="flex:none;display:flex;gap:5px">';
   if(r.use)h+='<button class="b sm '+((G.pills[r.id]||0)>0?'':'x')+'" data-a="use" data-i="'+r.id+'">服用</button>';
   if(r.off)h+='<button class="b sm x">暂时封存</button>';
@@ -1076,19 +1080,20 @@ function bag(){
  if((G.enh||0)>0)mats.push(['强化石',G.enh,'enh']);
  if((G.ref||0)>0)mats.push(['精炼石',G.ref,'ref']);
  if((G.star||0)>0)mats.push(['天星砂',G.star,'star']);
+ MATKEYS.forEach(function(mk){if((G[mk]||0)>0)mats.push([MATS[mk].n,G[mk],mk,MATS[mk].src])});
  if(G.contrib>0)mats.push(['宗门贡献',fs(G.contrib)]);
  if(mats.length){
   h+='<div class="c"><h4>材料</h4>';
-  mats.forEach(function(m2){var sm2=m2[2]?SELLMAT[m2[2]]:null;var can2=sm2&&(m2[2]=='herb'?G.herb>=sm2.n:m2[2]=='ore'?G.ore>=sm2.n:true);var pk2=sm2?Math.floor((m2[2]=='herb'?G.herb:m2[2]=='ore'?G.ore:(G[m2[2]]||0))/sm2.n):0;
-   h+='<div class="rw" style="margin-bottom:4px"><div><p>'+m2[0]+' · '+m2[1]+'</p>'+(sm2?'<p>'+sm2.n+' 个换 '+sm2.p+' 灵石</p>':'')+'</div>'+(can2?'<div style="flex:none;display:flex;gap:5px"><button class="b sm" data-a="sellMat" data-i="'+m2[2]+'">出售</button>'+(pk2>=2?'<button class="b sm" data-a="sellMat" data-i="'+m2[2]+':all">全售 ×'+pk2+'</button>':'')+'</div>':'')+'</div>'});
+  mats.forEach(function(m2){var sm2=m2[2]?SELLMAT[m2[2]]:null;var can2=sm2&&((G[m2[2]]||0)>=sm2.n);var pk2=sm2?Math.floor((m2[2]=='herb'?G.herb:m2[2]=='ore'?G.ore:(G[m2[2]]||0))/sm2.n):0;
+   h+='<div class="rw" style="margin-bottom:4px"><div><p>'+m2[0]+' · '+m2[1]+'</p>'+(m2[3]?'<p>'+m2[3]+'</p>':'')+(sm2?'<p>'+sm2.n+' 个换 '+sm2.p+' 灵石</p>':'')+'</div>'+(can2?'<div style="flex:none;display:flex;gap:5px"><button class="b sm" data-a="sellMat" data-i="'+m2[2]+'">出售</button>'+(pk2>=2?'<button class="b sm" data-a="sellMat" data-i="'+m2[2]+':all">全售 ×'+pk2+'</button>':'')+'</div>':'')+'</div>'});
   h+='</div>';
  }
  var oa=ARTS.filter(function(a){return (G.arts[a.id]||0)>0&&(!ARTF.cat||(a.cat||'mag')===ARTF.cat)});
  if(oa.length){
   h+='<div class="c"><h4>功法 <u>已习 '+oa.length+' 部</u></h4>';
-  oa.forEach(function(a){var l=G.arts[a.id];var frozen=a.sect&&G.sect!==a.sect;var uc=l<5?upCost(l):0;
-   h+='<div class="rw" style="margin-bottom:5px"><div><p><b style="color:#f2d79b;font-weight:400">'+a.n+'</b> '+a.t+'阶 · '+(CATN[a.cat||'mag'])+'类'+(a.elem?' · '+a.elem+'属性':'')+(a.abs?' · 吸纳术':'')+' · '+l+' 层 '+CHAP[l-1]+'</p><p>'+a.d+'</p><p>修炼 +'+Math.round(a.rate*100*(1+(l-1)*0.35))+'% 攻 +'+Math.round(a.atk*(1+(l-1)*0.35))+' 防 +'+Math.round(a.def*(1+(l-1)*0.35))+' 血 +'+Math.round(a.hp*(1+(l-1)*0.35))+'</p>'+(a.cat=='pas'?'<p>被动功法：只增属性，不用于出手。</p>':'')+(frozen?'<p>叛门冻结，不可精进。</p>':(l<5?'<p>精进需修为 '+fs(uc)+' · 灵石 '+upStone(l,a)+' · 灵草 '+upHerb(l)+'</p>':''))+'</div>';
-   if(l<5)h+='<button class="b sm '+((frozen||G.realm<a.need||G.qi<uc||G.stone<upStone(l,a)||G.herb<upHerb(l))?'x':'')+'" data-a="art" data-i="'+a.id+'">参悟精进</button>';
+  oa.forEach(function(a){var l=G.arts[a.id];var frozen=a.sect&&G.sect!==a.sect;var uc=l<5?upCost(l):0;var um5=l<5?upMat(l,a):null;
+   h+='<div class="rw" style="margin-bottom:5px"><div><p><b style="color:#f2d79b;font-weight:400">'+a.n+'</b> '+a.t+'阶 · '+(CATN[a.cat||'mag'])+'类'+(a.elem?' · '+a.elem+'属性':'')+(a.abs?' · 吸纳术':'')+' · '+l+' 层 '+CHAP[l-1]+'</p><p>'+a.d+'</p><p>修炼 +'+Math.round(a.rate*100*(1+(l-1)*0.35))+'% 攻 +'+Math.round(a.atk*(1+(l-1)*0.35))+' 防 +'+Math.round(a.def*(1+(l-1)*0.35))+' 血 +'+Math.round(a.hp*(1+(l-1)*0.35))+'</p>'+(a.cat=='pas'?'<p>被动功法：只增属性，不用于出手。</p>':'')+(frozen?'<p>叛门冻结，不可精进。</p>':(l<5?'<p>精进需修为 '+fs(uc)+' · 灵石 '+upStone(l,a)+' · 灵草 '+upHerb(l)+(um5?(' · '+matName(um5.k)+' '+um5.n):'')+'</p>':''))+'</div>';
+   if(l<5)h+='<button class="b sm '+((frozen||G.realm<a.need||G.qi<uc||G.stone<upStone(l,a)||G.herb<upHerb(l)||(um5&&(G[um5.k]||0)<um5.n))?'x':'')+'" data-a="art" data-i="'+a.id+'">参悟精进</button>';
    h+='</div>'});
   h+='</div>';
  }
@@ -1124,9 +1129,19 @@ function bag(){
  return h;
 }
 var ENH_RATE=[95,92,88,84,78,70,62,54,46,38,30,24,18];
-function enhCost(lv){return{enh:1+Math.floor(lv/4),ore:4+lv*2,stone:8+lv*6}}
+function enhCost(lv){return{enh:1+Math.floor(lv/4),ore:4+lv*2,stone:8+lv*6,ht:lv>=9?lv-8:0}}
 function enhRisk(lv){if(lv<=3)return'失败无惩罚，仅消耗材料。';if(lv<=6)return'失败保留当前等级。';if(lv<=9)return'失败有 20% 概率掉 1 级。';return'⚠ 高风险：失败有 30% 概率掉 1 级、'+(lv>=12?'5%':'3%')+' 概率装备损坏消失！'}
-var SELLMAT={herb:{n:20,p:1,name:'灵草'},ore:{n:15,p:1,name:'玄铁'},enh:{n:1,p:2,name:'强化石'},ref:{n:1,p:4,name:'精炼石'},star:{n:1,p:15,name:'天星砂'}};
+var SELLMAT={herb:{n:20,p:1,name:'灵草'},ore:{n:15,p:1,name:'玄铁'},enh:{n:1,p:2,name:'强化石'},ref:{n:1,p:4,name:'精炼石'},star:{n:1,p:15,name:'天星砂'},lz:{n:8,p:1,name:'灵芝'},ht:{n:6,p:1,name:'寒铁'},yd:{n:1,p:3,name:'妖丹'},sg:{n:2,p:1,name:'兽骨'},hy:{n:1,p:4,name:'寒玉'},hs:{n:1,p:4,name:'火髓'},js:{n:1,p:3,name:'金砂'},xc:{n:1,p:8,name:'星尘'},lwm:{n:1,p:5,name:'雷纹木'},hun:{n:1,p:6,name:'魂玉'},jy:{n:1,p:5,name:'剑意残片'},slz:{n:1,p:5,name:'舍利子'}};
+var MATS={lz:{n:'灵芝',src:'黑风岭起各图采集 · 宝箱',buy:25},ht:{n:'寒铁',src:'寒潭秘窟/万剑池/九幽魔渊采集',buy:30},yd:{n:'妖丹',src:'战斗掉落：野怪 15% · 精英必掉 · 首领 ×2',buy:45},sg:{n:'兽骨',src:'战斗掉落：野怪 20% · 精英 50% · 首领必掉',buy:12},hy:{n:'寒玉',src:'寒潭秘窟特产（采集/探索/宝箱）',buy:60},hs:{n:'火髓',src:'赤炎谷特产（采集/探索/宝箱）',buy:60},js:{n:'金砂',src:'流沙古漠特产（采集/探索/宝箱）',buy:40},xc:{n:'星尘',src:'碧落星墟特产（采集/探索/宝箱）',buy:120},lwm:{n:'雷纹木',src:'天外雷池特产（采集/探索/宝箱）',buy:80},hun:{n:'魂玉',src:'幽冥涧/九幽魔渊特产（采集/探索/宝箱）',buy:90},jy:{n:'剑意残片',src:'万剑池特产（采集/探索/宝箱）',buy:70},slz:{n:'舍利子',src:'寂灭佛窟特产（采集/探索/宝箱）',buy:70}};
+var MATKEYS=['lz','ht','yd','sg','hy','hs','js','xc','lwm','hun','jy','slz'];
+var SPMAP={3:'hy',4:'hun',5:'js',6:'hs',7:'xc',8:'jy',9:'slz',10:'hun',11:'lwm'};
+var HTMAPS=[3,8,10];
+function matName(k){if(k=='herb')return'灵草';if(k=='ore')return'玄铁';if(k=='stone')return'灵石';if(k=='contrib')return'宗门贡献';if(k=='enh')return'强化石';if(k=='ref')return'精炼石';if(k=='star')return'天星砂';return MATS[k]?MATS[k].n:k}
+function costTxt(c){var ps=[];for(var k in c){if(c[k]>0)ps.push(matName(k)+' '+c[k])}return ps.join(' · ')||'无'}
+function costOk(c){for(var k in c){if((G[k]||0)<c[k])return 0}return 1}
+var SECTMAT={qingyun:'jy',taixuan:'lz',danxia:'hs',wanshou:'sg',xuanshui:'hy',xuesha:'hun',tianji:'xc',lingxiao:'lwm'};
+function upMat(l,a){if(l<2)return null;var k=a.sect?SECTMAT[a.sect]:'lz';if(!k)k='lz';return{k:k,n:l-1}}
+function bmc(b,tl){if(b.id=='array'&&tl>=5)return[['js',tl-3]];if(b.id=='field'&&tl>=4)return[['sg',(tl-2)*2]];if(b.id=='mine'&&tl>=4)return[['ht',tl-2]];if(b.id=='furnace'&&tl>=3)return[['lz',(tl-1)*2]];return[]}
 function pillSell(r){return r.t=='天'?50:r.t=='地'?25:r.t=='玄'?12:r.t=='黄'?6:3}
 function sellEqPrice(it){var base=(it.atk||0)+(it.def||0)+Math.round((it.hp||0)/4);var m=it.q=='神'?6:it.q=='仙'?3:it.q=='宝'?1.6:it.q=='灵'?.8:.4;if(it.nid)m*=1.5;return Math.max(3,Math.round(base*m*(1+0.25*(it.lv||0))))}
 function eqDeltaHtml(it){
@@ -1151,7 +1166,7 @@ function showEqUp(id){
  h2+='<div class="tx">基础属性：攻 '+it.atk+' 防 '+it.def+' 血 '+it.hp+'<br>当前生效：攻 '+fs(es.atk)+' 防 '+fs(es.def)+' 血 '+fs(es.hp)+'（每强化 +1 级，全部属性 ×1.07）</div>';
  if(nd)h2+='<div class="tx" style="color:#8fd8a8">专属效果：'+nd.fxd+'</div>';
  if(lv<13){var c=enhCost(lv),rt=ENH_RATE[lv];
-  h2+='<div class="tx" style="margin-top:8px"><b style="color:#f2d79b">【强化】</b> +'+lv+' → +'+(lv+1)+' · 最高 +13<br>成功率 '+rt+'% · 消耗：强化石 ×'+c.enh+'（有 '+(G.enh||0)+'）、玄铁 '+c.ore+'、灵石 '+c.stone+'<br>'+enhRisk(lv)+'</div>';
+  h2+='<div class="tx" style="margin-top:8px"><b style="color:#f2d79b">【强化】</b> +'+lv+' → +'+(lv+1)+' · 最高 +13<br>成功率 '+rt+'% · 消耗：强化石 ×'+c.enh+'（有 '+(G.enh||0)+'）、玄铁 '+c.ore+'、灵石 '+c.stone+((c.ht||0)?('、寒铁 '+c.ht+'（有 '+(G.ht||0)+'）'):'')+'<br>'+enhRisk(lv)+'</div>';
   h2+='<button class="op" data-a="enhDo" data-i="'+it.id+'">开始强化 <small>成功率 '+rt+'%</small></button>';
   if((G.star||0)>0)h2+='<button class="op" data-a="enhDoL" data-i="'+it.id+'">用天星砂强化 <small>成功率 '+Math.min(97,rt+12)+'% · 余 '+G.star+' 颗</small></button>';
   if(lv<9)h2+='<button class="op" data-a="enhChain" data-i="'+it.id+':'+(lv<5?5:9)+'">连冲到 +'+(lv<5?5:9)+' <small>材料够则自动连冲；连冲只到 +9，高风险段请手动</small></button>';
@@ -1235,6 +1250,7 @@ function mkt(){
  h+='<div class="rw" style="margin-top:5px"><div><p>精炼石（有 '+(G.ref||0)+'）</p><p>装备精炼材料</p></div><button class="b sm '+(G.stone>=mktCost(40)?'':'x')+'" data-a="mktBuy" data-i="ref">买 '+mktCost(40)+' 石</button></div>';
  h+='<div class="rw" style="margin-top:5px"><div><p>回灵丹（有 '+(G.pills.huiling||0)+')</p><p>回复 50% 灵力；自炼入药就要 30 灵石，摊位卖现成货，图个方便。</p></div><button class="b sm '+(G.stone>=mktCost(60)?'':'x')+'" data-a="mktBuy" data-i="huiling">买 '+mktCost(60)+' 石</button></div>';
  h+='<div class="rw" style="margin-top:5px"><div><p>护器丹（有 '+(G.pills.huqi||0)+')</p><p>强化失败将掉级/损坏时自动消耗一枚抵消惩罚（连冲不触发）；自炼成本约 40 灵石，摊位卖现成。</p></div><button class="b sm '+(G.stone>=mktCost(90)?'':'x')+'" data-a="mktBuy" data-i="huqi">买 '+mktCost(90)+' 石</button></div>';
+ MATKEYS.forEach(function(mk){var md2=MATS[mk];h+='<div class="rw" style="margin-top:5px"><div><p>'+md2.n+'（有 '+(G[mk]||0)+')</p><p>'+md2.src+'</p></div><button class="b sm '+(G.stone>=mktCost(md2.buy)?'':'x')+'" data-a="mktBuy" data-i="'+mk+'">买 '+mktCost(md2.buy)+' 石</button></div>'});
  h+='</div>';
  return h;
 }
@@ -1471,12 +1487,13 @@ function act(a,i){
   if(l>=5){say('《'+art.n+'》已至圆满篇。','mm');render();return}
   if(G.realm<art.need){say('境界不足，参悟《'+art.n+'》需 '+R[art.need]+'。','rr');render();return}
   if(art.sect&&G.sect!==art.sect){say('叛门之后，《'+art.n+'》已冻结：不在本宗，无法再精进。','mm');render();return}
-  var uc=upCost(l),us=upStone(l,art),uh=upHerb(l);
+  var uc=upCost(l),us=upStone(l,art),uh=upHerb(l),um=upMat(l,art);
   if(G.qi<uc){say('修为不足：精进需耗修为 '+fs(uc)+'，先修炼攒些修为再来。','rr');render();return}
   if(G.stone<us){say('灵石不足：精进需灵石 '+us+'（布引灵阵的耗材），先攒些灵石再来。','rr');render();return}
   if(G.herb<uh){say('灵草不足：精进需灵草 '+uh+' 株（燃草引灵），先去采集些灵草。','rr');render();return}
-  G.qi-=uc;G.stone-=us;G.herb-=uh;G.arts[i]=l+1;
-  say('闭关精进，耗修为 '+fs(uc)+'、灵石 '+us+'、灵草 '+uh+'，《'+art.n+'》精进至 '+(l+1)+' 层（'+CHAP[l]+'）。','oo');
+  if(um&&(G[um.k]||0)<um.n){say(matName(um.k)+'不足：精进至 '+(l+1)+' 层需 '+matName(um.k)+' '+um.n+'（'+MATS[um.k].src+'）。','rr');render();return}
+  G.qi-=uc;G.stone-=us;G.herb-=uh;if(um)G[um.k]-=um.n;G.arts[i]=l+1;
+  say('闭关精进，耗修为 '+fs(uc)+'、灵石 '+us+'、灵草 '+uh+(um?('、'+matName(um.k)+' '+um.n):'')+'，《'+art.n+'》精进至 '+(l+1)+' 层（'+CHAP[l]+'）。','oo');
  }else if(a=='eqBest'){
   var chg=0;SLOTS.forEach(function(sd){var best3=null,bs3=-1;(G.inv||[]).forEach(function(it){if(it.slot!==sd.id)return;var es9=effStats(it);var sc=es9.atk*2+es9.def*3+es9.hp*.25;if(sc>bs3){bs3=sc;best3=it}});if(best3&&G.eq[sd.id]!==best3.id){G.eq[sd.id]=best3.id;chg++}});
   say(chg?('一键配装完成：已调整 '+chg+' 个部位（按战力评估 攻×2+防×3+血×0.25）。'):'当前已是库存里的最强搭配，无需调整。','oo');
@@ -1486,8 +1503,8 @@ function act(a,i){
   var it8=findInv(i);
   if(it8){var lv8=it8.lv||0;
    if(lv8<13){var c8=enhCost(lv8);
-    if((G.enh||0)<c8.enh||G.ore<c8.ore||G.stone<c8.stone){say('材料不足：强化需强化石 ×'+c8.enh+'（有 '+(G.enh||0)+'）、玄铁 '+c8.ore+'、灵石 '+c8.stone+'。强化石可打秘境、开宝箱、分解装备或在集市/宗门商店换。','rr');showEqUp(i)}
-    else{G.enh-=c8.enh;G.ore-=c8.ore;G.stone-=c8.stone;
+    if((G.enh||0)<c8.enh||G.ore<c8.ore||G.stone<c8.stone||(G.ht||0)<(c8.ht||0)){say('材料不足：强化需强化石 ×'+c8.enh+'（有 '+(G.enh||0)+'）、玄铁 '+c8.ore+'、灵石 '+c8.stone+((c8.ht||0)?('、寒铁 '+c8.ht+'（有 '+(G.ht||0)+'，寒潭秘窟/万剑池/九幽魔渊采集）'):'')+'。强化石可打秘境、开宝箱、分解装备或在集市/宗门商店换。','rr');showEqUp(i)}
+    else{G.enh-=c8.enh;G.ore-=c8.ore;G.stone-=c8.stone;if(c8.ht)G.ht-=c8.ht;
      var rt8=ENH_RATE[lv8];var bonus8='';
      if(a=='enhDoL'){if((G.star||0)>0){G.star--;rt8=Math.min(97,rt8+12);bonus8='（天星砂加持）'}}
      if(Math.random()*100<rt8){it8.lv=lv8+1;say('强化成功'+bonus8+'！【'+it8.name+'】升至 +'+it8.lv+'，属性全面提升。','oo');showEqUp(i)}
@@ -1541,6 +1558,7 @@ function act(a,i){
   else if(i=='enh'){var c15=mktCost(15);if(G.stone>=c15){G.stone-=c15;G.enh=(G.enh||0)+1;gainPop(['强化石 +1']);say('在集市买下强化石 ×1。','bb')}}
   else if(i=='ref'){var c40=mktCost(40);if(G.stone>=c40){G.stone-=c40;G.ref=(G.ref||0)+1;gainPop(['精炼石 +1']);say('在集市买下精炼石 ×1。','bb')}}
   else if(i=='star'){if(G.realm<3){say('天星砂蕴星辰之力，元婴期前强买也无福消受。','rr')}else if(G.stone>=mktCost(300)){G.stone-=mktCost(300);G.star=(G.star||0)+1;gainPop(['天星砂 +1']);say('在集市买下天星砂 ×1——强化装备时 +12% 成功率。','bb')}}
+  else if(MATS[i]){var cm=mktCost(MATS[i].buy);if(G.stone>=cm){G.stone-=cm;G[i]=(G[i]||0)+1;gainPop([MATS[i].n+' +1']);say('在集市买下'+MATS[i].n+' ×1。','bb')}else say('灵石不足。','rr')}
   else{var nd9=namedById(i);if(nd9&&G.realm<(QREQ[nd9.q]||0)){say('此器品阶非你当前境界所能驾驭，摊主摇头不卖。','rr')}else{var pr9=mktPrice(i);if(pr9>0&&!ownsNamed(i)&&G.stone>=pr9){G.stone-=pr9;grantNamed(i,'集市购入');say('在集市购入名器，去装备页穿戴。','oo')}}}
  }else if(a=='sellEq'){
   var it10=findInv(i);
@@ -1557,7 +1575,8 @@ function act(a,i){
   if(!b)return;
   var l2=G.built[i],c2=Math.floor(b.base*Math.pow(1.75,l2));
   if(l2>=b.max||G.stone<c2)return;
-  G.stone-=c2;G.built[i]=l2+1;
+  var ex2=bmc(b,l2+1);for(var ei=0;ei<ex2.length;ei++){if((G[ex2[ei][0]]||0)<ex2[ei][1]){say('材料不足：'+b.n+'升至 '+(l2+1)+' 级还需 '+matName(ex2[ei][0])+' '+ex2[ei][1]+'（有 '+(G[ex2[ei][0]]||0)+'）。','rr');render();save();return}}
+  G.stone-=c2;ex2.forEach(function(e){G[e[0]]-=e[1]});G.built[i]=l2+1;
   say(b.n+'扩建至'+G.built[i]+'级。','bb');
  }else if(a=='fight'){fight(+i);return}
  else if(a=='enter'){enterMap(+i);return}
@@ -1567,8 +1586,8 @@ function act(a,i){
   if(!r)return;
   if(r.off){say(r.n+'已暂时封存，无法炼制。','rr');render();save();return}
   if(r.need&&G.realm<r.need){say('境界不足，'+R[r.need]+'期方可炼制'+r.n+'。','rr');render();save();return}
-  if(G.herb<r.cost.herb||G.ore<(r.cost.ore||0)||G.stone<(r.cost.stone||0))return;
-  G.herb-=r.cost.herb;G.ore-=(r.cost.ore||0);G.stone-=(r.cost.stone||0);
+  if(!costOk(r.cost))return;
+  for(var ck in r.cost)G[ck]=(G[ck]||0)-r.cost[ck];
   if(Math.random()<alchRate()){
    var cnt=1+(Math.random()<.2?1:0);
    G.pills[i]=(G.pills[i]||0)+cnt;G.stat.pill+=cnt;if(G.sectTask&&G.sectTask.id=='alch')G.sectTask.prog=(G.sectTask.prog||0)+cnt;
@@ -1710,7 +1729,7 @@ function mapPage(){
  if((MP.pos==6&&!MP.eliteDone)||(MP.pos==8&&!MP.bossDone))adj=adj.concat([MP.pos]);
  var bossLock=!MP.eliteDone&&seenN<5;
  var h='<div class="c"><h4>'+m.n+' <u>'+(MP.bossDone?'首领已灭':bossLock?'首领未解锁':'首领已解锁')+'</u></h4>';
- h+='<p>'+m.d+' 气血 '+fs(G.hp)+'/'+fs(hmax())+' · 战力 '+fs(pw())+' / 推荐 '+fs(m.rec)+' · 已探索 '+seenN+'/9 · 已通关 '+(G.cleared[MP.idx]||0)+' 次</p>';
+ h+='<p>'+m.d+' 特产：'+(SPMAP[MP.idx]?MATS[SPMAP[MP.idx]].n:'无')+' · 气血 '+fs(G.hp)+'/'+fs(hmax())+' · 战力 '+fs(pw())+' / 推荐 '+fs(m.rec)+' · 已探索 '+seenN+'/9 · 已通关 '+(G.cleared[MP.idx]||0)+' 次</p>';
  h+='<button class="b sm" data-a="exitMap">结束历练 · 退出地图（收益保留）</button></div>';
  h+='<div class="c"><h4>地图全图 <u>点发光节点移动</u></h4><div class="mpc"><svg viewBox="0 0 100 100" preserveAspectRatio="none">';
  NEDGE.forEach(function(e){var a=NPOS[e[0]],b=NPOS[e[1]];var on=MP.seen[e[0]]&&MP.seen[e[1]];
@@ -1748,10 +1767,15 @@ function moveTo(i){
   var r=Math.random();
   if(r<.45){mlog('在'+m.nodes[i]+'惊动了妖物！');startBattle(wildEnemy(MP.idx,0),MP.idx,'wild');if(!B)showMapOv();return}
   if(r<.70){var q=Math.round(nq()*.06);G.qi+=q;mlog(m.nodes[i]+'灵气浓郁，修为 +'+fs(q)+'。')}
-  else if(r<.88){var s2=rn(5,15)+MP.idx*3;G.stone+=s2;mlog('在'+m.nodes[i]+'拾得灵石 '+s2+'。');gainPop(['灵石 +'+s2])}
+  else if(r<.84){var s2=rn(5,15)+MP.idx*3;G.stone+=s2;mlog('在'+m.nodes[i]+'拾得灵石 '+s2+'。');gainPop(['灵石 +'+s2])}
+  else if(r<.94&&SPMAP[MP.idx]){var spk2=SPMAP[MP.idx];G[spk2]=(G[spk2]||0)+1;mlog('在'+m.nodes[i]+'寻得此地特产：'+MATS[spk2].n+' +1。');gainPop([MATS[spk2].n+' +1'])}
   else{var d2=Math.round(hmax()*.08);G.hp=Math.max(1,G.hp-d2);mlog(m.nodes[i]+'暗藏禁制，你气血 -'+d2+'。')}
  }else if(i==2||i==4){
-  var hb=rn(m.hr[0],m.hr[1]),ob=rn(m.or[0],m.or[1]);G.herb+=hb;G.ore+=ob;mlog('在'+m.nodes[i]+'采集：灵草 +'+hb+'、玄铁 +'+ob+'。');gainPop(['灵草 +'+hb,'玄铁 +'+ob]);
+  var hb=rn(m.hr[0],m.hr[1]),ob=rn(m.or[0],m.or[1]);G.herb+=hb;G.ore+=ob;var _gp=['灵草 +'+hb,'玄铁 +'+ob];var _gt='在'+m.nodes[i]+'采集：灵草 +'+hb+'、玄铁 +'+ob;
+  if(MP.idx>=2){var lz2=rn(1,Math.max(1,Math.round(hb*.5)));G.lz=(G.lz||0)+lz2;_gp.push('灵芝 +'+lz2);_gt+='、灵芝 +'+lz2}
+  if(HTMAPS.indexOf(MP.idx)>=0){var ht2=rn(1,Math.max(1,Math.round(ob*.4)));G.ht=(G.ht||0)+ht2;_gp.push('寒铁 +'+ht2);_gt+='、寒铁 +'+ht2}
+  var spk=SPMAP[MP.idx];if(spk){var spn=rn(1,2)+(MP.idx>=7?1:0);G[spk]=(G[spk]||0)+spn;_gp.push(MATS[spk].n+' +'+spn);_gt+='、'+MATS[spk].n+' +'+spn}
+  mlog(_gt+'。');gainPop(_gp);
   if(Math.random()<.3){mlog('守药妖兽扑了出来！');startBattle(wildEnemy(MP.idx,0),MP.idx,'wild');if(!B)showMapOv();return}
  }else if(i==5){
   if(!MP.rest){var hh=Math.round(hmax()*.35*(1+fxV('restUp')/100));G.hp=Math.min(hmax(),G.hp+hh);G.mp=Math.min(mpmax(),(G.mp||0)+Math.round(mpmax()*.5));MP.rest=1;mlog('在'+m.nodes[i]+'休整，气血回复 '+hh+'、灵力回复 50%。（每次历练限一次）')}
@@ -1765,6 +1789,8 @@ function moveTo(i){
    if(Math.random()<.25){var cp=dropPool(MP.idx);if(cp.length){var ca=cp[rn(0,cp.length-1)];G.frag[ca.id]=(G.frag[ca.id]||0)+1;_cg.push('《'+ca.n+'》残页（'+G.frag[ca.id]+'/5）');txt+=' 箱底还压着《'+ca.n+'》残页（'+G.frag[ca.id]+'/5）。'}}
    if(Math.random()<.3){G.enh=(G.enh||0)+1;_cg.push('强化石 +1');txt+=' 还有一颗强化石。'}
    if(Math.random()<.2){G.ref=(G.ref||0)+1;_cg.push('精炼石 +1');txt+=' 还有一颗精炼石。'}
+   if(Math.random()<.35&&SPMAP[MP.idx]){var spk3=SPMAP[MP.idx];G[spk3]=(G[spk3]||0)+2;_cg.push(MATS[spk3].n+' +2');txt+=' 还有'+MATS[spk3].n+' ×2。'}
+   if(Math.random()<.3){G.yd=(G.yd||0)+1;_cg.push('妖丹 +1');txt+=' 还有一枚妖丹。'}
    var cnm=CHESTNAMED[MP.idx];
    if(cnm&&!ownsNamed(cnm)&&Math.random()<.3){if(!G.inv)G.inv=[];var nit2=makeNamed(cnm);G.inv.push(nit2);_cg.push('名器【'+nit2.name+'】（'+nit2.q+'品）');txt+=' 箱底压着一件名器【'+nit2.name+'】（'+nit2.q+'品）！'}
    else if(Math.random()<.2){if(!G.inv)G.inv=[];var es3=SLOTS[rn(0,SLOTS.length-1)].id;var it7=makeItem(es3,dropQuality(MP.idx,0),MAPS[MP.idx].lv,0);G.inv.push(it7);_cg.push('装备【'+it7.name+'】（'+it7.q+'品）');txt+=' 箱底还有一件装备【'+it7.name+'】（'+it7.q+'品）。'}
@@ -1907,6 +1933,10 @@ function winBattle(){sfx('win');
   if(B.kind=='boss'){G.enh=(G.enh||0)+2;md.push('强化石 +2');if(Math.random()<.5){G.ref=(G.ref||0)+1;md.push('精炼石 +1')}if(Math.random()<.1){G.star=(G.star||0)+1;md.push('天星砂 +1')}}
   else if(B.kind=='elite'){if(Math.random()<.35){G.enh=(G.enh||0)+1;md.push('强化石 +1')}if(Math.random()<.2){G.ref=(G.ref||0)+1;md.push('精炼石 +1')}}
   else if(Math.random()<.15){G.enh=(G.enh||0)+1;md.push('强化石 +1')}
+  var spk4=SPMAP[B.idx];
+  if(B.kind=='boss'){G.yd=(G.yd||0)+2;md.push('妖丹 +2');G.sg=(G.sg||0)+1;md.push('兽骨 +1');if(spk4){G[spk4]=(G[spk4]||0)+2;md.push(MATS[spk4].n+' +2')}}
+  else if(B.kind=='elite'){G.yd=(G.yd||0)+1;md.push('妖丹 +1');if(Math.random()<.5){G.sg=(G.sg||0)+1;md.push('兽骨 +1')}if(spk4&&Math.random()<.35){G[spk4]=(G[spk4]||0)+1;md.push(MATS[spk4].n+' +1')}}
+  else if(B.kind!='spar'){if(Math.random()<.15){G.yd=(G.yd||0)+1;md.push('妖丹 +1')}if(Math.random()<.2){G.sg=(G.sg||0)+1;md.push('兽骨 +1')}if(spk4&&Math.random()<.12){G[spk4]=(G[spk4]||0)+1;md.push(MATS[spk4].n+' +1')}}
   if(md.length){if(!B.gains)B.gains=[];md.forEach(function(x){B.gains.push(x)});B.result+=' 还掉落：'+md.join('、')+'。'}
   var sig=B.kind=='boss'?BOSSDROP[B.idx]:B.kind=='elite'?ELITEDROP[B.idx]:null;
   if(sig&&!ownsNamed(sig)&&Math.random()<(B.kind=='boss'?(firstClr?1:.25):.2)){
