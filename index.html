@@ -45,7 +45,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:18px 10p
 #qa .lgs{max-height:120px;overflow-y:auto;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:7px 9px;background:rgba(4,6,10,.5)}
 #qa .lgs p{margin:0 0 4px;font-size:11px;line-height:1.65}
 #qa .gr{color:#8fd8a8}#qa .bb{color:var(--j)}#qa .oo{color:var(--g2)}#qa .rr{color:#e2847c}#qa .mm{color:#7f8798}
-#qa .tb{display:grid;grid-template-columns:repeat(11,1fr);gap:1px;padding:6px 6px 8px;border-top:1px solid rgba(255,255,255,.07);background:rgba(4,6,10,.42)}
+#qa .tb{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;padding:6px 6px 8px;border-top:1px solid rgba(255,255,255,.07);background:rgba(9,10,16,.94);position:sticky;bottom:calc(47px + env(safe-area-inset-bottom,0px));z-index:55}
 #qa .bb2{height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;margin:4px 0 8px}
 #qa .bb2 s{display:block;height:100%;text-decoration:none;transition:width .25s}
 #qa .op.x{opacity:.3;pointer-events:none}
@@ -62,18 +62,19 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:18px 10p
 #qa .nd.adj{border-color:rgba(111,211,199,.75);cursor:pointer;box-shadow:0 0 8px rgba(111,211,199,.25)}
 #qa .nd.cur{border-color:#d9b46a;background:rgba(217,180,106,.18);box-shadow:0 0 10px rgba(217,180,106,.35)}
 #qa .nd.cur b{color:#f2d79b}
-#qa .tb button{font-family:inherit;font-size:10px;color:#8b93a2;cursor:pointer;padding:7px 0;border-radius:8px;border:1px solid transparent;background:transparent;transition:all .15s;position:relative}
+#qa .tb button{font-family:inherit;font-size:11px;color:#8b93a2;cursor:pointer;padding:6px 0 5px;border-radius:8px;border:1px solid transparent;background:transparent;transition:all .15s;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;white-space:nowrap;line-height:1.25}
+#qa .tb button .ti{font-size:18px;line-height:1.15}
 #qa .tb button.on{color:var(--g2);background:rgba(217,180,106,.12);border-color:rgba(217,180,106,.3)}
 #qa .tb button i{position:absolute;top:3px;right:5px;width:5px;height:5px;border-radius:50%;background:var(--r);display:none}
 #qa .tb button i.s{display:block}
-#qa .ov{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:20px 18px;background:linear-gradient(180deg,rgba(6,9,13,.97),rgba(10,14,20,.99));z-index:6;overflow-y:auto}
+#qa .ov{position:absolute;inset:0;z-index:80;display:none;flex-direction:column;justify-content:center;padding:20px 18px;background:linear-gradient(180deg,rgba(6,9,13,.97),rgba(10,14,20,.99));overflow-y:auto}
 #qa .ov.on{display:flex}
 #qa .ov h5{margin:0 0 8px;font-size:16px;font-weight:400;letter-spacing:.16em;color:var(--g2);text-align:center}
 #qa .ov .tx{font-size:12.5px;line-height:1.95;color:#c9d2de;margin-bottom:14px;letter-spacing:.02em}
 #qa .ov .op{width:100%;text-align:left;margin-bottom:8px;padding:11px 12px;font-family:inherit;font-size:12px;line-height:1.6;color:#e6dcc7;cursor:pointer;border-radius:10px;border:1px solid rgba(217,180,106,.28);background:linear-gradient(180deg,rgba(217,180,106,.1),rgba(217,180,106,.02));transition:all .15s}
 #qa .ov .op:hover{border-color:rgba(217,180,106,.6);background:rgba(217,180,106,.16)}
 #qa .ov .cg{margin-top:12px;font-size:10.5px;color:#6f7684;text-align:center;letter-spacing:.05em}
-#qa #qpop{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,6,9,.74);z-index:50;padding:24px}
+#qa #qpop{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,6,9,.74);z-index:90;padding:24px}
 #qa #qpop.on{display:flex}
 #qa .popCard{background:linear-gradient(180deg,#141b26,#0d1219);border:1px solid #b98a2f;border-radius:14px;padding:20px 18px 14px;width:100%;max-width:330px;text-align:center;box-shadow:0 10px 34px rgba(0,0,0,.55)}
 #qa .popT{font-size:17px;color:#e8c97a;letter-spacing:3px;margin-bottom:10px}
@@ -108,7 +109,7 @@ body.bigF #qbd p,body.bigF .tx{font-size:15px;line-height:1.8}
 #qbar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(14,13,20,.93);border-top:1px solid rgba(217,180,106,.35)}
 #qbar button{flex:1}
 #qbar button.dim{opacity:.45}
-body.qb{padding-bottom:66px}
+body.qb{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 .stage{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 10px;padding:0 6px}
 .av{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:33px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.15),rgba(0,0,0,.38));border:2px solid #666;flex:none}
 .av.me{border-color:#6fd3c7}
@@ -132,18 +133,18 @@ body.qb{padding-bottom:66px}
 <div class="sv" id="qsv">存档检测中…</div>
 <div class="bd" id="qbd"></div>
 <div class="tb" id="qtb">
-<button data-t="cul" class="on">🧘 修行</button>
-<button data-t="cav">🏯 洞府</button>
-<button data-t="art">📜 功法</button>
-<button data-t="sec">🏛 宗门</button>
-<button data-t="bag">🎒 背包</button>
-<button data-t="eqp">⚔️ 装备</button>
-<button data-t="exp">🧭 云游<i id="qdot"></i></button>
-<button data-t="mkt">🏪 集市</button>
-<button data-t="fgt">🌀 秘境</button>
-<button data-t="alc">🔥 丹器</button>
-<button data-t="bio">📖 传记<i id="qdot2"></i></button>
-<button data-t="dex">📚 图鉴</button>
+<button data-t="cul" class="on"><span class="ti">🧘</span>修行</button>
+<button data-t="cav"><span class="ti">🏯</span>洞府</button>
+<button data-t="art"><span class="ti">📜</span>功法</button>
+<button data-t="sec"><span class="ti">🏛</span>宗门</button>
+<button data-t="bag"><span class="ti">🎒</span>背包</button>
+<button data-t="eqp"><span class="ti">⚔️</span>装备</button>
+<button data-t="exp"><span class="ti">🧭</span>云游<i id="qdot"></i></button>
+<button data-t="mkt"><span class="ti">🏪</span>集市</button>
+<button data-t="fgt"><span class="ti">🌀</span>秘境</button>
+<button data-t="alc"><span class="ti">🔥</span>丹器</button>
+<button data-t="bio"><span class="ti">📖</span>传记<i id="qdot2"></i></button>
+<button data-t="dex"><span class="ti">📚</span>图鉴</button>
 </div>
 <div class="ov" id="qov"></div>
 <div class="ov" id="qupd" style="z-index:9">
@@ -681,7 +682,7 @@ function newG(){
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({g:G,t:Date.now()}))}catch(e){SAVE_OK=0}}
 function checkStore(){try{localStorage.setItem('qx_merge_test','1');var v=localStorage.getItem('qx_merge_test');localStorage.removeItem('qx_merge_test');SAVE_OK=(v==='1')?1:0}catch(e){SAVE_OK=0}}
-var APP_VER='1.29';
+var APP_VER='1.30';
 var UPD_FEED='https://annuel.framapad.org/p/xiuxian-ver-839201/export/txt';
 var UPD_PAGE='https://muse.ai/s/xiu-xian-wen-dao-iphone-zhu-ping-mu-xtxa6xlxjxtjxubaxn/ZoHtkV6WZ6hnaSFnyc-ViFRS4ubfr8kQ-UJid-_1P8I';
 function verCmp(a,b){a=(''+a).split('.');b=(''+b).split('.');for(var i=0;i<3;i++){var x=parseInt(a[i]||'0',10),y=parseInt(b[i]||'0',10);if(x!==y)return x>y?1:-1}return 0}
