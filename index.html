@@ -102,6 +102,22 @@ body.bigF #qbd{font-size:16px}
 body.bigF #qbd p,body.bigF .tx{font-size:15px;line-height:1.8}
 #qtb button.on{border-color:var(--ac)}
 .ov h5{color:var(--ac)}
+.hero{position:relative;overflow:hidden;border:1px solid var(--ac);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(0,0,0,.28))}
+.hero .hr{font-size:26px;letter-spacing:3px;color:var(--ac);text-shadow:0 0 14px rgba(0,0,0,.65)}
+.bar{height:9px;background:rgba(255,255,255,.09);border-radius:5px;overflow:hidden;margin:3px 0 7px}
+.bar s{display:block;height:100%;border-radius:5px;transition:width .5s}
+.noIntro .xp{display:none}
+#qbar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(14,13,20,.93);border-top:1px solid rgba(217,180,106,.35)}
+#qbar button{flex:1}
+#qbar button.dim{opacity:.45}
+body.qb{padding-bottom:66px}
+.stage{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 10px;padding:0 6px}
+.av{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:33px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.15),rgba(0,0,0,.38));border:2px solid #666;flex:none}
+.av.me{border-color:#6fd3c7}
+.shakeA{animation:shk .35s}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}55%{transform:translateX(5px)}80%{transform:translateX(-3px)}}
+.glow{text-shadow:0 0 7px currentColor}
+.tut .done{color:#8fd8a8;text-decoration:line-through;opacity:.75}
 </style>
 </head>
 <body>
@@ -118,17 +134,18 @@ body.bigF #qbd p,body.bigF .tx{font-size:15px;line-height:1.8}
 <div class="sv" id="qsv">存档检测中…</div>
 <div class="bd" id="qbd"></div>
 <div class="tb" id="qtb">
-<button data-t="cul" class="on">修行</button>
-<button data-t="cav">洞府</button>
-<button data-t="art">功法</button>
-<button data-t="sec">宗门</button>
-<button data-t="bag">背包</button>
-<button data-t="eqp">装备</button>
-<button data-t="exp">云游<i id="qdot"></i></button>
-<button data-t="mkt">集市</button>
-<button data-t="fgt">秘境</button>
-<button data-t="alc">丹器</button>
-<button data-t="bio">传记<i id="qdot2"></i></button>
+<button data-t="cul" class="on">🧘 修行</button>
+<button data-t="cav">🏯 洞府</button>
+<button data-t="art">📜 功法</button>
+<button data-t="sec">🏛 宗门</button>
+<button data-t="bag">🎒 背包</button>
+<button data-t="eqp">⚔️ 装备</button>
+<button data-t="exp">🧭 云游<i id="qdot"></i></button>
+<button data-t="mkt">🏪 集市</button>
+<button data-t="fgt">🌀 秘境</button>
+<button data-t="alc">🔥 丹器</button>
+<button data-t="bio">📖 传记<i id="qdot2"></i></button>
+<button data-t="dex">📚 图鉴</button>
 </div>
 <div class="ov" id="qov"></div>
 <div class="ov" id="qupd" style="z-index:9">
@@ -141,6 +158,7 @@ body.bigF #qbd p,body.bigF .tx{font-size:15px;line-height:1.8}
 <div style="font-size:11px;opacity:.6;text-align:center;margin-top:8px">当前版本 v<span id="qupdc"></span> · 更新不丢档：新版直接覆盖安装即可</div>
 </div>
 <div id="qpop"></div>
+<div id="qbar"><button class="b sm" data-a="med">🧘 打坐</button><button class="b sm" data-a="use" data-i="huichun" id="qbHeal">💊 回春丹</button><button class="b sm" data-a="brk" id="qbBrk">⬆ 突破</button></div>
 </div>
 </div>
 
@@ -537,7 +555,7 @@ function setMult(){return setSect()?1.08:1}
 function effStats(it){var m=Math.pow(1.07,it.lv||0);return{atk:Math.round((it.atk||0)*m),def:Math.round((it.def||0)*m),hp:Math.round((it.hp||0)*m)}}
 function makeNamed(nid){var nd=namedById(nid);if(!nd)return null;var sd=slotDef(nd.slot);var id='e'+(G.eqSeq||1);G.eqSeq=(G.eqSeq||1)+1;return{id:id,nid:nd.id,slot:nd.slot,q:nd.q,name:nd.n,atk:Math.round(nd.pow*sd.prof.atk),def:Math.round(nd.pow*sd.prof.def),hp:Math.round(nd.pow*sd.prof.hp),lv:0}}
 function ownsNamed(nid){return (G.inv||[]).some(function(it){return it.nid===nid})}
-function grantNamed(nid,src){if(ownsNamed(nid))return null;if(!G.inv)G.inv=[];var it=makeNamed(nid);if(!it)return null;G.inv.push(it);gainPop(['名器【'+it.name+'】（'+it.q+'品 · '+slotDef(it.slot).n+'）'+(src?' · '+src:'')]);return it}
+function grantNamed(nid,src){if(ownsNamed(nid))return null;if(!G.inv)G.inv=[];var it=makeNamed(nid);if(!it)return null;G.inv.push(it);buzz(60);gainPop(['名器【'+it.name+'】（'+it.q+'品 · '+slotDef(it.slot).n+'）'+(src?' · '+src:'')]);return it}
 function slotDef(id){for(var i=0;i<SLOTS.length;i++)if(SLOTS[i].id===id)return SLOTS[i];return null}
 function eqItem(slot){var id=G.eq&&G.eq[slot];if(!id||!G.inv)return null;for(var i=0;i<G.inv.length;i++)if(G.inv[i].id===id)return G.inv[i];return null}
 function eqSum(k){var t=0;if(!G.inv)return 0;for(var i=0;i<SLOTS.length;i++){var it=eqItem(SLOTS[i].id);if(it)t+=effStats(it)[k]}return t}
@@ -650,7 +668,7 @@ function finishCraft(safe){
   if(f&&f.dbl&&Math.random()<f.dbl)cnt++;
   if(Math.random()<alSum('dbl'))cnt++;
   G.pills[rid]=(G.pills[rid]||0)+cnt;G.stat.pill+=cnt;if(G.sectTask&&G.sectTask.id=='alch')G.sectTask.prog=(G.sectTask.prog||0)+cnt;
-  gainPop([r.n+' ×'+cnt]);say('丹成【'+GN[gi]+'】！'+r.n+' 出炉 '+cnt+' 枚'+(safe?'（稳妥炼制）':'（控火评分 '+Math.round(avg*100)+'）')+'。','gr');
+  if(gi==3)buzz([40,40,90]);gainPop([r.n+' ×'+cnt]);say('丹成【'+GN[gi]+'】！'+r.n+' 出炉 '+cnt+' 枚'+(safe?'（稳妥炼制）':'（控火评分 '+Math.round(avg*100)+'）')+'。','gr');
  }else{
   if(f&&f.save&&Math.random()<f.save){for(var ck2 in r.cost)G[ck2]=(G[ck2]||0)+r.cost[ck2];say('火候失控，炉中一声闷响——混沌造化炉灵光一闪，材料竟丝毫无损！','oo')}
   else say('火候失控（'+GN[gi]+'控火），'+r.n+' 化作一炉焦灰，材料尽毁。','rr');
@@ -665,7 +683,7 @@ function newG(){
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({g:G,t:Date.now()}))}catch(e){SAVE_OK=0}}
 function checkStore(){try{localStorage.setItem('qx_merge_test','1');var v=localStorage.getItem('qx_merge_test');localStorage.removeItem('qx_merge_test');SAVE_OK=(v==='1')?1:0}catch(e){SAVE_OK=0}}
-var APP_VER='1.26';
+var APP_VER='1.27';
 var UPD_FEED='https://annuel.framapad.org/p/xiuxian-ver-839201/export/txt';
 var UPD_PAGE='https://muse.ai/s/xiu-xian-wen-dao-iphone-zhu-ping-mu-xtxa6xlxjxtjxubaxn/ZoHtkV6WZ6hnaSFnyc-ViFRS4ubfr8kQ-UJid-_1P8I';
 function verCmp(a,b){a=(''+a).split('.');b=(''+b).split('.');for(var i=0;i<3;i++){var x=parseInt(a[i]||'0',10),y=parseInt(b[i]||'0',10);if(x!==y)return x>y?1:-1}return 0}
@@ -811,6 +829,7 @@ function top(){
  $('qdot').className=(cd>Date.now())?'':'';
  var sv=$('qsv');if(sv){sv.textContent=SAVE_OK?'存档 ✓ 本地保存正常（用同一浏览器、同一入口打开可续玩）':'存档 ⚠ 当前环境无法保存进度！退出即丢失，请到「传记」页导出存档码备份';sv.className=SAVE_OK?'sv':'sv bad'}
  var THA=['#8fb4c7','#8fb4c7','#7fc98f','#7fc98f','#d9b45b','#d9b45b','#b48fe0','#b48fe0','#b48fe0','#e8a7c3','#ffd75e','#ffd75e'];var thc=THA[Math.min(11,G.realm)];try{document.documentElement.style.setProperty('--ac',thc);document.body.classList.toggle('bigF',!!(G.flags&&G.flags.fontBig));var qre=$('qr');if(qre)qre.style.color=thc}catch(e){}
+ try{document.body.classList.toggle('noIntro',!(G.flags&&G.flags.showIntro));var qb=$('qbar');if(qb){var qon=!!(G.flags&&G.flags.rootChosen)&&!G.ended;qb.style.display=qon?'flex':'none';document.body.classList.toggle('qb',qon);var qh=$('qbHeal');if(qh)qh.classList.toggle('dim',!((G.pills.huichun||0)>0));var qk=$('qbBrk');if(qk)qk.classList.toggle('dim',!(G.qi>=nq()))}}catch(e){}
 }
 function eff(s){
  if(!s||s=='*')return;
@@ -913,7 +932,9 @@ function render(){
  else if(TB=='sec')bd.innerHTML=secPage();
  else if(TB=='eqp')bd.innerHTML=eqp();
  else if(TB=='alc')bd.innerHTML=alc();
+ else if(TB=='dex')bd.innerHTML=dex();
  else bd.innerHTML=bio();
+ introPass();
  top();
 }
 function nextTip(){
@@ -938,7 +959,7 @@ function guideHtml(){var t=nextTip();if(!t)return '';return '<div class="c" styl
 function cul(){
  var rd=rootDef();
  var sl2=G.flags&&G.flags.secludeUntil?Math.max(0,Math.ceil((G.flags.secludeUntil-Date.now())/1000)):0;
- var h=guideHtml()+'<div class="c"><h4>道基 <u>'+rd.n+' · '+G.elem+'系</u></h4>';
+ var h=guideHtml()+heroHtml()+tutHtml()+'<div class="c"><h4>道基 <u>'+rd.n+' · '+G.elem+'系</u></h4>';
  h+='<p>悟性 '+G.ins+' · 根骨 '+G.bone+' · 每息 '+rate().toFixed(1)+' · 门派 '+(sect()?sect().name:'散修')+'</p>';
  h+='<p>灵根加成：修炼 ×'+rd.rate.toFixed(2)+' · '+rootBonusTxt(rd)+'</p><p>'+rd.d+'</p>';
  h+='<p>攻击 '+fs(atk())+' · 防御 '+fs(def())+' · 气血 '+fs(hmax())+' · 战力 '+fs(pw())+'</p>';
@@ -953,12 +974,13 @@ function cul(){
  h+='<p>丹药永久：攻 +'+((G.perm&&G.perm.atk)||0)+' 防 +'+((G.perm&&G.perm.def)||0)+' 血 +'+((G.perm&&G.perm.hp)||0)+'（吃淬体/破军/金刚/培元/血莲/天罡丹永久提升）</p>';
  h+='<p>根骨：每点 +2 攻、+1.2 防、+10 血（当前 '+G.bone+' 点，淬体丹 +1）</p>';
  h+='<p>倍率加成：灵根 '+rootBonusTxt(rd)+(sect()?(' · 门派 '+sect().name):' · 未入宗门')+'</p></div>';
- h+='<div class="c"><h4>修行</h4><div class="g2"><button class="b" data-a="med">打坐吐纳</button><button class="b" data-a="deep">入定一年</button></div>';
+ h+='<div class="c"><h4>修行</h4><div class="g2"><button class="b" data-a="med">🧘 打坐吐纳</button><button class="b" data-a="deep">🌙 入定一年</button></div>';
  h+='<div class="g2" style="margin-top:6px"><button class="b '+(sl2?'x':'')+'" data-a="seclude">'+(sl2?('闭关调息中 · 还剩 '+sl2+' 秒'):'闭关调息 · 灵力回满')+'</button><button class="b" data-a="use" data-i="huiling">服回灵丹（余 '+(G.pills.huiling||0)+')</button></div>';
  h+='<p style="margin-top:4px">闭关调息：开始后 60 秒灵力回满，期间可照常行动，不必守着页面。</p>';
  h+='<p style="margin-top:6px">'+(G.sub<2?('小境精进成功率 '+bcS()+'%，失败折损三成修为（失败会积累成功率）。'):('大境界冲关成功率 '+bc()+'%（丹药另加），需先通关本境秘境首领；失败散功四成。'))+'</p></div>';
  h+='<div class="c"><h4>关隘 <u>'+(G.sub<2?('精进成功率 '+bcS()+'%'):('冲关成功率 '+Math.min(95,bc()+pillBo())+'%'+(pillBo()?('（含丹药 +'+pillBo()+'%）'):'（无丹药加成，备破境丹 +15% / 渡劫丹 +30%）')))+'</u></h4>';
  if(G.sub>=2)h+='<p>'+(G.realm>=10?'已至大罗之巅。':bigGate()?('历练已达标：本境秘境首领已通关，可以冲关。'):('冲关条件未满：先去秘境通关本境首领（'+gateMap()+'）。'))+'</p>';
+ h+=barHtml(G.sub<2?bcS():Math.min(95,bc()+pillBo()),'linear-gradient(90deg,#5a3d8a,#b48fe0)');
  h+='<button class="b w '+((G.qi>=nq()&&!G.ended)?'mn':'x')+'" data-a="brk">'+(G.ended?'此世已终':(G.sub<2?'精进至'+R[G.realm]+SB[G.sub+1]:'冲击「'+(R[G.realm+1]||'天门')+'」'))+'</button></div>';
  h+='<div class="c"><h4>所见所闻</h4><div class="lgs">'+G.log.slice(-12).map(function(l){return '<p class="'+l[1]+'">'+l[0]+'</p>'}).join('')+'</div></div>';
  return h;
@@ -1065,6 +1087,7 @@ function secPage(){
   var all=1;rows.forEach(function(r2){if(!r2[1])all=0});
   h+='<div class="c"><h4>晋升 · '+SRANKS[G.srank+1]+'</h4>';
   rows.forEach(function(r2){h+='<p>'+(r2[1]?'✦ ':'· ')+r2[0]+'</p>'});
+  h+=barHtml(G.contribTot/pr.ct*100,'linear-gradient(90deg,#8a6a25,#e8c96a)');
   h+='<button class="b w '+(all?'mn':'x')+'" data-a="promo">晋升'+SRANKS[G.srank+1]+'</button></div>';
  }
  h+='<div class="c"><h4>宗门任务 <u>贡献点来源</u></h4>';
@@ -1206,7 +1229,7 @@ function bag(){
  if(G.inv&&G.inv.length){
   h+='<div class="c"><h4>装备 <u>共 '+G.inv.length+' 件</u></h4>';
   G.inv.forEach(function(it){var sd2=slotDef(it.slot);var on=G.eq[it.slot]===it.id;var es2=effStats(it);var nd2=namedDef(it);
-   h+='<div class="rw" style="margin-bottom:5px"><div><p>'+(sd2?sd2.n:'装备')+' · <b style="color:#f2d79b;font-weight:400">'+it.name+'</b>（'+it.q+'品）'+(it.lv?' +'+it.lv:'')+(on?' · <span style="color:#8fd8a8">已装备</span>':'')+'</p><p>攻 +'+fs(es2.atk)+' 防 +'+fs(es2.def)+' 血 +'+fs(es2.hp)+'</p>'+(nd2?'<p style="color:#8fd8a8">'+nd2.fxd+'</p>':'')+eqDeltaHtml(it)+'</div><div style="flex:none;display:flex;gap:5px"><button class="b sm" data-a="eqUp" data-i="'+it.id+'">升级</button>'+(on?'':'<button class="b sm" data-a="sellEq" data-i="'+it.id+'">出售 '+sellEqPrice(it)+' 石</button>')+'</div></div>'});
+   h+='<div class="rw" style="margin-bottom:5px"><div><p>'+(sd2?sd2.n:'装备')+' · <b class="'+((it.q=='仙'||it.q=='神')?'glow':'')+'" style="color:'+QCC[it.q]+';font-weight:400">'+it.name+'</b>（'+it.q+'品）'+(it.lv?' +'+it.lv:'')+(on?' · <span style="color:#8fd8a8">已装备</span>':'')+'</p><p>攻 +'+fs(es2.atk)+' 防 +'+fs(es2.def)+' 血 +'+fs(es2.hp)+'</p>'+(nd2?'<p style="color:#8fd8a8">'+nd2.fxd+'</p>':'')+eqDeltaHtml(it)+'</div><div style="flex:none;display:flex;gap:5px"><button class="b sm" data-a="eqUp" data-i="'+it.id+'">升级</button>'+(on?'':'<button class="b sm" data-a="sellEq" data-i="'+it.id+'">出售 '+sellEqPrice(it)+' 石</button>')+'</div></div>'});
   h+='</div>';
  }
  if(G.pets.length){
@@ -1245,6 +1268,62 @@ function grantFurn(id,why){if(ownsFurn(id))return 0;if(!G.furns)G.furns=[];G.fur
 function alSum(k){var s2=0;ARTS.forEach(function(a){if(a.al&&a.al[k]&&(G.arts[a.id]||0)>0)s2+=a.al[k]});return s2}
 function alCtrl(){var s2=0;ARTS.forEach(function(a){if(a.al&&a.al.ctrl&&(G.arts[a.id]||0)>0)s2+=a.al.ctrl*(G.arts[a.id]||0)});return s2}
 function canCraft(){return G.sect=='danta'&&(G.arts['dtb']||0)>0&&!!furnDef(G.furn)}
+var QCC={'凡':'#a8b0ba','灵':'#63c775','宝':'#5aa7e8','仙':'#c792ea','神':'#ffd75e'};
+var ECOL={'金':'#e3c878','木':'#7ec850','水':'#5aa7e8','火':'#e86a5a','土':'#c89a6a','雷':'#b48fe0','冰':'#9adfe8','风':'#8ae8b0','血':'#e85a7a'};
+var NICON=['🚩','🔍','🌿','🔍','🌿','🏕️','⚔️','🎁','👑'];
+function foeIcon(m){var n=(m&&m.boss)||'';var K=[['龙','🐉'],['蛟','🐉'],['蛇','🐍'],['蛛','🕷️'],['狼','🐺'],['虎','🐯'],['熊','🐻'],['猿','🐒'],['鹰','🦅'],['雕','🦅'],['鱼','🐟'],['鲤','🐟'],['虫','🐛'],['蝎','🦂'],['蜥','🦎'],['龟','🐢'],['狐','🦊'],['兔','🐰'],['猪','🐗'],['豕','🐗'],['骷','💀'],['鬼','👻'],['魂','👻'],['魔','👹'],['妖','👺'],['僧','🧙'],['道人','🧙'],['母','🕷️'],['王','👑'],['莱姆','🟢']];for(var i=0;i<K.length;i++)if(n.indexOf(K[i][0])>=0)return K[i][1];var E={'金':'⚔️','木':'🌿','水':'🌊','火':'🔥','土':'🪨','雷':'⚡','冰':'❄️','风':'🌀','血':'🩸'};return E[(m&&m.e)||'']||'👾'}
+function buzz(pat){try{if(navigator.vibrate)navigator.vibrate(pat)}catch(e){}}
+function barHtml(pct,grad){return '<div class="bar"><s style="width:'+Math.max(0,Math.min(100,pct))+'%;background:'+grad+'"></s></div>'}
+function heroHtml(){
+ var rd=rootDef();
+ var h='<div class="hero"><div class="hr">'+(G.ended?ENDS[G.ended][0]:(R[G.realm]+SB[G.sub]))+'</div>';
+ h+='<div style="font-size:12px;color:#aeb6c2;margin:3px 0 9px">'+rd.n+' · '+G.elem+'系 · '+(sect()?sect().name:'散修')+' · 战力 '+fs(pw())+' · 灵石 '+fs(G.stone)+'</div>';
+ h+='<div style="font-size:11px;color:#aeb6c2">修为 '+fs(G.qi)+' / '+fs(nq())+'</div>'+barHtml(G.qi/nq()*100,'linear-gradient(90deg,#8a6a25,#e8c96a)');
+ h+='<div style="font-size:11px;color:#aeb6c2">气血 '+fs(Math.max(0,Math.round(G.hp)))+' / '+fs(hmax())+'</div>'+barHtml(G.hp/hmax()*100,'linear-gradient(90deg,#2d6a63,#6fd3c7)');
+ h+='<div style="font-size:11px;color:#aeb6c2">灵力 '+fs(Math.max(0,Math.floor(G.mp||0)))+' / '+fs(mpmax())+'</div>'+barHtml((G.mp||0)/mpmax()*100,'linear-gradient(90deg,#2b4d8f,#6aa8ff)');
+ return h+'</div>';
+}
+function tutHtml(){
+ if(G.gen>1||(G.flags&&G.flags.tutDone))return '';
+ var items=[
+  ['测灵定根，踏上仙途',!!(G.flags&&G.flags.rootChosen)],
+  ['打坐吐纳，修为攒到 50',G.qi>=50||G.sub>0||G.realm>0],
+  ['完成第一次突破',(G.stat.brk||0)>=1],
+  ['进秘境历练并获胜一场',(G.stat.win||0)>=1],
+  ['备两枚回春丹傍身',(G.pills.huichun||0)>=2],
+  ['拜入任意宗门',!!G.sect]
+ ];
+ var dn=0;items.forEach(function(x){if(x[1])dn++});
+ if(dn>=items.length){G.flags.tutDone=1;G.stone+=200;gainPop(['灵石 +200（新手道途完成）']);return '<div class="c tut"><h4>新手道途 <u>已完成</u></h4><p class="done">六项道途尽数完成，灵石 +200 已入账。仙路漫漫，就此启程。</p></div>'}
+ var h='<div class="c tut"><h4>新手道途 <u>'+dn+' / '+items.length+' · 全完成奖灵石 200</u></h4>';
+ items.forEach(function(x){h+='<p class="'+(x[1]?'done':'')+'">'+(x[1]?'✅ ':'▸ ')+x[0]+'</p>'});
+ return h+'</div>';
+}
+function introPass(){
+ if(!bd||(G.flags&&G.flags.showIntro))return;
+ var ps=bd.querySelectorAll('.c p');
+ for(var i=0;i<ps.length;i++){var pel=ps[i];if(pel.closest('.lgs'))continue;if(pel.textContent.length>=75&&!pel.querySelector('button'))pel.classList.add('xp')}
+}
+function dex(){
+ var mc=0;MATKEYS.forEach(function(k){if((G[k]||0)>0)mc++});
+ var rc=0;RECIPES.forEach(function(r){if((G.pills[r.id]||0)>0||drugCnt(r.id)>0)rc++});
+ var nc=0;NAMED.forEach(function(nd){if(ownsNamed(nd.id))nc++});
+ var fc=0;FURNS.forEach(function(f){if(ownsFurn(f.id))fc++});
+ var tot=mc+rc+nc+fc,tt=MATKEYS.length+RECIPES.length+NAMED.length+FURNS.length;
+ var h='<div class="c"><h4>图鉴 <u>收集进度</u></h4><p>总收集 '+tot+' / '+tt+'（'+Math.round(tot/tt*100)+'%）· 材料 '+mc+'/'+MATKEYS.length+' · 丹方 '+rc+'/'+RECIPES.length+' · 名器 '+nc+'/'+NAMED.length+' · 丹炉 '+fc+'/'+FURNS.length+'</p>'+barHtml(tot/tt*100,'linear-gradient(90deg,#8a6a25,#e8c96a)')+'</div>';
+ h+='<div class="c"><h4>材料图鉴 <u>灵草 '+fs(G.herb)+' · 玄铁 '+fs(G.ore)+'</u></h4>';
+ MATKEYS.forEach(function(k){var md=MATS[k];var own=(G[k]||0)>0;h+='<p>'+(own?'✅ ':'❔ ')+md.n+'：'+(own?('持有 '+fs(G[k])):('未获得 · '+md.src))+'</p>'});
+ h+='</div>';
+ h+='<div class="c"><h4>丹方图鉴</h4>';
+ RECIPES.forEach(function(r){var own=(G.pills[r.id]||0)>0||drugCnt(r.id)>0;h+='<p>'+(own?'✅ ':'❔ ')+r.n+(r.off?'（封存）':'')+'：'+(own?('持有 '+(G.pills[r.id]||0)+' 枚 · '):'')+r.d+'</p>'});
+ h+='</div>';
+ h+='<div class="c"><h4>名器图鉴</h4>';
+ NAMED.forEach(function(nd){var own=ownsNamed(nd.id);h+='<p>'+(own?'✅ ':'❔ ')+'<span style="color:'+QCC[nd.q]+'">'+nd.n+'</span> '+nd.q+'品 · '+slotDef(nd.slot).n+'：'+(own?nd.fxd:'未获得')+'</p>'});
+ h+='</div>';
+ h+='<div class="c"><h4>丹炉图鉴</h4>';
+ FURNS.forEach(function(f){var own=ownsFurn(f.id);h+='<p>'+(own?'✅ ':'❔ ')+f.n+' '+f.q+'品：'+(own?f.d:('获取：'+f.src))+'</p>'});
+ return h+'</div>';
+}
 function pillSell(r){return r.t=='天'?50:r.t=='地'?25:r.t=='玄'?12:r.t=='黄'?6:3}
 function sellEqPrice(it){var base=(it.atk||0)+(it.def||0)+Math.round((it.hp||0)/4);var m=it.q=='神'?6:it.q=='仙'?3:it.q=='宝'?1.6:it.q=='灵'?.8:.4;if(it.nid)m*=1.5;return Math.max(3,Math.round(base*m*(1+0.25*(it.lv||0))))}
 function eqDeltaHtml(it){
@@ -1299,7 +1378,7 @@ function eqp(){
   if(EQF.sort)items.sort(function(x,y){var ex=effStats(x),ey=effStats(y);return (ey.atk*2+ey.def*3+ey.hp*.25+(y.lv||0)*30)-(ex.atk*2+ex.def*3+ex.hp*.25+(x.lv||0)*30)});
   items.forEach(function(it){
    var on=G.eq[sd.id]===it.id;var es=effStats(it);var nd=namedDef(it);
-   h+='<div class="rw" style="margin-top:5px"><div><p><b style="color:#f2d79b;font-weight:400">'+it.name+'</b> '+it.q+'品'+(it.lv?' · 强化 +'+it.lv:'')+(nd?' · <span style="color:#e8c97a">名器</span>':'')+(on?' · <span style="color:#8fd8a8">装备中</span>':'')+'</p><p>攻 +'+fs(es.atk)+' 防 +'+fs(es.def)+' 血 +'+fs(es.hp)+'</p>'+(nd?'<p style="color:#8fd8a8">'+nd.fxd+'</p>':'')+eqDeltaHtml(it)+'</div><div style="flex:none;display:flex;gap:5px">';
+   h+='<div class="rw" style="margin-top:5px"><div><p><b class="'+((it.q=='仙'||it.q=='神')?'glow':'')+'" style="color:'+QCC[it.q]+';font-weight:400">'+it.name+'</b> '+it.q+'品'+(it.lv?' · 强化 +'+it.lv:'')+(nd?' · <span style="color:#e8c97a">名器</span>':'')+(on?' · <span style="color:#8fd8a8">装备中</span>':'')+'</p><p>攻 +'+fs(es.atk)+' 防 +'+fs(es.def)+' 血 +'+fs(es.hp)+'</p>'+(nd?'<p style="color:#8fd8a8">'+nd.fxd+'</p>':'')+eqDeltaHtml(it)+'</div><div style="flex:none;display:flex;gap:5px">';
    if(on)h+='<button class="b sm" data-a="eqOff" data-i="'+sd.id+'">卸下</button>';
    else h+='<button class="b sm" data-a="eqOn" data-i="'+it.id+'">装备</button><button class="b sm" data-a="eqDel" data-i="'+it.id+'">分解</button>';
    h+='<button class="b sm mn" data-a="eqUp" data-i="'+it.id+'">升级</button></div></div>';
@@ -1405,7 +1484,7 @@ function affCard(){
 }
 function bio(){
  var h='<div class="c"><h4>存档 <u>'+(SAVE_OK?'本地保存正常':'⚠ 本地保存不可用')+'</u></h4><p>进度会自动存到当前浏览器（同一浏览器、同一入口打开才能读到）。换浏览器、换设备或怕丢档时：导出存档码存到备忘录，之后在任意环境导入即可恢复。</p><div class="g2"><button class="b sm" data-a="expCode">导出存档码</button><button class="b sm" data-a="impCode">导入存档码</button></div></div>';
- h+='<div class="c"><h4>设置 <u>观感</u></h4><div class="g2"><button class="b sm" data-a="setOpt" data-i="font">字号 · '+(G.flags&&G.flags.fontBig?'大':'标准')+'</button><button class="b sm" data-a="setOpt" data-i="anim">动画演出 · '+(G.flags&&G.flags.anim===0?'关':'开')+'</button><button class="b sm" data-a="setOpt" data-i="snd">音效 · '+(G.flags&&G.flags.snd===0?'关':'开')+'</button><button class="b sm" data-a="setOpt" data-i="spd">战斗倍速 · ×'+((G.flags&&G.flags.spd)||1)+'</button></div><p>字号调大后页面文字变大；关掉动画后，突破演出与战斗飘字不再出现；倍速只影响自动战斗的出手间隔，战斗里也能切换。音效为程序合成的轻响，不加载任何音频文件。</p></div>';
+ h+='<div class="c"><h4>设置 <u>观感</u></h4><div class="g2"><button class="b sm" data-a="setOpt" data-i="font">字号 · '+(G.flags&&G.flags.fontBig?'大':'标准')+'</button><button class="b sm" data-a="setOpt" data-i="anim">动画演出 · '+(G.flags&&G.flags.anim===0?'关':'开')+'</button><button class="b sm" data-a="setOpt" data-i="snd">音效 · '+(G.flags&&G.flags.snd===0?'关':'开')+'</button><button class="b sm" data-a="setOpt" data-i="spd">战斗倍速 · ×'+((G.flags&&G.flags.spd)||1)+'</button><button class="b sm" data-a="setOpt" data-i="intro">页面说明 · '+((G.flags&&G.flags.showIntro)?'显示':'折叠')+'</button></div><p>字号调大后页面文字变大；关掉动画后，突破演出与战斗飘字不再出现；倍速只影响自动战斗的出手间隔，战斗里也能切换。音效为程序合成的轻响，不加载任何音频文件。</p></div>';
  h+='<div class="c"><h4>生平 <u>第 '+G.gen+' 世</u></h4><p>突破 '+G.stat.brk+' 次 · 战胜 '+G.stat.win+' 场 · 云游 '+G.stat.ev+' 事 · 炼丹 '+G.stat.pill+' 枚</p></div>';
  h+=affCard();
  if(G.ended){
@@ -1447,7 +1526,7 @@ function act(a,i){
   if(G.sub<2){
    var ps=bcS();
    if(Math.random()*100<=ps){
-    G.qi-=nq();G.sub++;G.stat.brk++;G.hp=hmax();G.luck=0;
+    G.qi-=nq();G.sub++;G.stat.brk++;G.hp=hmax();G.luck=0;buzz(80);
     say('灵气贯通，入'+R[G.realm]+SB[G.sub]+'（精进成功率 '+ps+'%）。','gr');brkFX(2);
    }else{
     G.qi-=Math.round(nq()*.3);G.luck+=5;G.stat.fail++;
@@ -1462,7 +1541,7 @@ function act(a,i){
    else if((G.pills.pojing||0)>0){G.pills.pojing--;bo=15;say('服破境丹，护住心脉（冲关成功率 +15%）。','bb')}
    var p=Math.min(95,bc()+bo);
    if(Math.random()*100<=p){
-    G.qi-=nq();G.realm++;G.sub=0;G.luck=0;G.ins++;G.life+=32;G.hp=hmax();G.stat.brk++;
+    G.qi-=nq();G.realm++;G.sub=0;G.luck=0;G.ins++;G.life+=32;G.hp=hmax();G.stat.brk++;buzz(120);
     say((G.realm>=3?'九道劫雷劈落，你以身硬抗，':'关隘轰然破碎，')+'踏入'+R[G.realm]+'期。寿元+32，悟性+1。','oo');
     say('境界即战力：当前战力已涨至 '+fs(pw())+'。','bb');brkFX(1);
    }else{
@@ -1485,6 +1564,7 @@ function act(a,i){
   else if(i=='anim')G.flags.anim=G.flags.anim===0?1:0;
   else if(i=='snd')G.flags.snd=G.flags.snd===0?1:0;
   else if(i=='spd')G.flags.spd=((G.flags.spd||1)%3)+1;
+  else if(i=='intro')G.flags.showIntro=G.flags.showIntro?0:1;
  }else if(a=='affGift'){
   var gp=i.split(':');var gn=gp[0],gth=+gp[1];var gv=G.aff[gn]||0;var gg=(AFFGIFT[gn]||{})[gth];
   if(gg&&gv>=gth&&!G.flags['gift_'+gn+'_'+gth]){G.flags['gift_'+gn+'_'+gth]=1;applyGift(gg);say(gn+'备下的回礼，你收下了。','oo')}
@@ -1855,11 +1935,11 @@ function mapPage(){
   if(i==6&&MP.eliteDone)tag='已灭';
   if(i==MP.pos)cls+=' cur';else if(adj.indexOf(i)>=0)cls+=' adj';
   if(MP.seen[i])cls+=' seen';
-  h+='<div class="'+cls+'"'+(adj.indexOf(i)>=0?' data-mv="'+i+'"':'')+' style="left:'+NPOS[i][0]+'%;top:'+NPOS[i][1]+'%"><b>'+nm+'</b><span>'+tag+'</span></div>';
+  h+='<div class="'+cls+'"'+(adj.indexOf(i)>=0?' data-mv="'+i+'"':'')+' style="left:'+NPOS[i][0]+'%;top:'+NPOS[i][1]+'%"><b>'+NICON[i]+nm+'</b><span>'+tag+'</span></div>';
  });
  h+='</div><p>当前位置：'+m.nodes[MP.pos]+'。'+(MP.bossDone?'首领已灭，本次历练已结束。':bossLock?'道路单向、不可回头；继续向前探索（满 5 处）或击败精英即可解锁首领。':'首领已解锁，去最深处挑战 '+m.boss+'。')+'</p></div>';
  h+='<div class="c"><h4>可前往</h4><div class="g2">';
- adj.forEach(function(i){h+='<button class="b sm" data-mv="'+i+'">'+m.nodes[i]+'（'+NTAG[i]+'）</button>'});
+ adj.forEach(function(i){h+='<button class="b sm" data-mv="'+i+'">'+NICON[i]+' '+m.nodes[i]+'（'+NTAG[i]+'）</button>'});
  if(!adj.length)h+='<p>前方已无路可走，结束历练退出吧。</p>';
  h+='</div></div>';
  h+='<div class="c"><h4>历练记录</h4><div class="lgs">'+MP.log.slice(-6).map(function(l){return '<p>'+l+'</p>'}).join('')+'</div>';
@@ -1950,7 +2030,9 @@ function skillCd(a){return (a.t=='天'||a.t=='地')?3:2}
 function showBattle(){
  if(!B)return;
  var m=B.m,epct=Math.max(0,Math.min(100,B.eh/B.emax*100)),ppct=Math.max(0,Math.min(100,G.hp/hmax()*100));
+ var shkE=B._shE!==undefined&&B.eh<B._shE;B._shE=B.eh;var shkP=B._shP!==undefined&&G.hp<B._shP;B._shP=G.hp;
  var h='<h5>'+m.n+' · 第 '+B.round+' 回合</h5>';
+ h+='<div class="stage"><div style="text-align:center"><div class="av me'+(shkP?' shakeA':'')+'">👤</div><div style="font-size:11px;color:#aeb6c2;margin-top:3px">你</div></div><div style="color:#8b93a2;font-size:13px">— VS —</div><div style="text-align:center"><div class="av'+(shkE?' shakeA':'')+'" style="border-color:'+(ECOL[m.e]||'#666')+'">'+foeIcon(m)+'</div><div style="font-size:11px;color:#aeb6c2;margin-top:3px">'+m.boss+'</div></div></div>';
  h+='<div class="tx" style="margin-bottom:8px"><div class="btA" id="btE">'+m.boss+'（'+m.e+'） 气血 '+fs(Math.max(0,B.eh))+' / '+fs(B.emax)+'<div class="bb2"><s style="width:'+epct+'%;background:linear-gradient(90deg,#6d2b2b,#d2706a)"></s></div></div>';
  h+='<div class="btA" id="btP">你 气血 '+fs(Math.max(0,G.hp))+' / '+fs(hmax())+'<div class="bb2"><s style="width:'+ppct+'%;background:linear-gradient(90deg,#2d6a63,#6fd3c7)"></s></div>';
  var mpct=Math.max(0,Math.min(100,(G.mp||0)/mpmax()*100));
@@ -1978,11 +2060,11 @@ function showBattle(){
   }
   h+='<button class="op" data-bt="back">← 返回</button>';
  }else{
-  h+='<button class="op" data-bt="atk">普通攻击 <small>约 '+fs(Math.max(1,Math.round((atk()-B.m.def*0.5)*B.co)))+' 伤 · 灵力 4</small></button>';
+  h+='<button class="op" data-bt="atk">⚔️ 普通攻击 <small>约 '+fs(Math.max(1,Math.round((atk()-B.m.def*0.5)*B.co)))+' 伤 · 灵力 4</small></button>';
   h+='<button class="op" data-bt="skill">使用功法 <small>已习 '+ARTS.filter(function(a){return (G.arts[a.id]||0)>0&&a.cat!='pas'}).length+' 门可选</small></button>';
   h+='<button class="op" data-bt="pill">吃药 <small>回春丹 '+(G.pills.huichun||0)+' · 初级聚气丹 '+(G.pills.juqi||0)+' · 回灵丹 '+(G.pills.huiling||0)+'</small></button>';
-  h+='<button class="op" data-bt="guard">防御调息 <small>本回合受伤大减，回复 6% 气血 + 30% 灵力</small></button>';
-  h+='<button class="op" data-bt="flee">逃跑 <small>成功率约 '+Math.round(fleeChance()*100)+'%</small></button>';
+  h+='<button class="op" data-bt="guard">🛡️ 防御调息 <small>本回合受伤大减，回复 6% 气血 + 30% 灵力</small></button>';
+  h+='<button class="op" data-bt="flee">🏃 逃跑 <small>成功率约 '+Math.round(fleeChance()*100)+'%</small></button>';
   h+='<button class="op '+(B.auto?'mn':'')+'" data-bt="auto">自动战斗 '+(B.auto?'· 开':'· 关')+' <small>托管策略：技能优先、残血服回春丹、灵力告罄吃回灵丹或调息</small></button>';
   h+='<button class="op" data-bt="spd">战斗倍速 · ×'+((G.flags&&G.flags.spd)||1)+' <small>自动战斗出手间隔随倍速缩短（点按切换 ×1/×2/×3）</small></button>';
  }
