@@ -102,8 +102,6 @@ body.bigF #qbd{font-size:16px}
 body.bigF #qbd p,body.bigF .tx{font-size:15px;line-height:1.8}
 #qtb button.on{border-color:var(--ac)}
 .ov h5{color:var(--ac)}
-.hero{position:relative;overflow:hidden;border:1px solid var(--ac);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(0,0,0,.28))}
-.hero .hr{font-size:26px;letter-spacing:3px;color:var(--ac);text-shadow:0 0 14px rgba(0,0,0,.65)}
 .bar{height:9px;background:rgba(255,255,255,.09);border-radius:5px;overflow:hidden;margin:3px 0 7px}
 .bar s{display:block;height:100%;border-radius:5px;transition:width .5s}
 .noIntro .xp{display:none}
@@ -683,7 +681,7 @@ function newG(){
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({g:G,t:Date.now()}))}catch(e){SAVE_OK=0}}
 function checkStore(){try{localStorage.setItem('qx_merge_test','1');var v=localStorage.getItem('qx_merge_test');localStorage.removeItem('qx_merge_test');SAVE_OK=(v==='1')?1:0}catch(e){SAVE_OK=0}}
-var APP_VER='1.27';
+var APP_VER='1.28';
 var UPD_FEED='https://annuel.framapad.org/p/xiuxian-ver-839201/export/txt';
 var UPD_PAGE='https://muse.ai/s/xiu-xian-wen-dao-iphone-zhu-ping-mu-xtxa6xlxjxtjxubaxn/ZoHtkV6WZ6hnaSFnyc-ViFRS4ubfr8kQ-UJid-_1P8I';
 function verCmp(a,b){a=(''+a).split('.');b=(''+b).split('.');for(var i=0;i<3;i++){var x=parseInt(a[i]||'0',10),y=parseInt(b[i]||'0',10);if(x!==y)return x>y?1:-1}return 0}
@@ -959,7 +957,7 @@ function guideHtml(){var t=nextTip();if(!t)return '';return '<div class="c" styl
 function cul(){
  var rd=rootDef();
  var sl2=G.flags&&G.flags.secludeUntil?Math.max(0,Math.ceil((G.flags.secludeUntil-Date.now())/1000)):0;
- var h=guideHtml()+heroHtml()+tutHtml()+'<div class="c"><h4>道基 <u>'+rd.n+' · '+G.elem+'系</u></h4>';
+ var h=guideHtml()+tutHtml()+'<div class="c"><h4>道基 <u>'+rd.n+' · '+G.elem+'系</u></h4>';
  h+='<p>悟性 '+G.ins+' · 根骨 '+G.bone+' · 每息 '+rate().toFixed(1)+' · 门派 '+(sect()?sect().name:'散修')+'</p>';
  h+='<p>灵根加成：修炼 ×'+rd.rate.toFixed(2)+' · '+rootBonusTxt(rd)+'</p><p>'+rd.d+'</p>';
  h+='<p>攻击 '+fs(atk())+' · 防御 '+fs(def())+' · 气血 '+fs(hmax())+' · 战力 '+fs(pw())+'</p>';
@@ -1274,15 +1272,6 @@ var NICON=['🚩','🔍','🌿','🔍','🌿','🏕️','⚔️','🎁','👑'];
 function foeIcon(m){var n=(m&&m.boss)||'';var K=[['龙','🐉'],['蛟','🐉'],['蛇','🐍'],['蛛','🕷️'],['狼','🐺'],['虎','🐯'],['熊','🐻'],['猿','🐒'],['鹰','🦅'],['雕','🦅'],['鱼','🐟'],['鲤','🐟'],['虫','🐛'],['蝎','🦂'],['蜥','🦎'],['龟','🐢'],['狐','🦊'],['兔','🐰'],['猪','🐗'],['豕','🐗'],['骷','💀'],['鬼','👻'],['魂','👻'],['魔','👹'],['妖','👺'],['僧','🧙'],['道人','🧙'],['母','🕷️'],['王','👑'],['莱姆','🟢']];for(var i=0;i<K.length;i++)if(n.indexOf(K[i][0])>=0)return K[i][1];var E={'金':'⚔️','木':'🌿','水':'🌊','火':'🔥','土':'🪨','雷':'⚡','冰':'❄️','风':'🌀','血':'🩸'};return E[(m&&m.e)||'']||'👾'}
 function buzz(pat){try{if(navigator.vibrate)navigator.vibrate(pat)}catch(e){}}
 function barHtml(pct,grad){return '<div class="bar"><s style="width:'+Math.max(0,Math.min(100,pct))+'%;background:'+grad+'"></s></div>'}
-function heroHtml(){
- var rd=rootDef();
- var h='<div class="hero"><div class="hr">'+(G.ended?ENDS[G.ended][0]:(R[G.realm]+SB[G.sub]))+'</div>';
- h+='<div style="font-size:12px;color:#aeb6c2;margin:3px 0 9px">'+rd.n+' · '+G.elem+'系 · '+(sect()?sect().name:'散修')+' · 战力 '+fs(pw())+' · 灵石 '+fs(G.stone)+'</div>';
- h+='<div style="font-size:11px;color:#aeb6c2">修为 '+fs(G.qi)+' / '+fs(nq())+'</div>'+barHtml(G.qi/nq()*100,'linear-gradient(90deg,#8a6a25,#e8c96a)');
- h+='<div style="font-size:11px;color:#aeb6c2">气血 '+fs(Math.max(0,Math.round(G.hp)))+' / '+fs(hmax())+'</div>'+barHtml(G.hp/hmax()*100,'linear-gradient(90deg,#2d6a63,#6fd3c7)');
- h+='<div style="font-size:11px;color:#aeb6c2">灵力 '+fs(Math.max(0,Math.floor(G.mp||0)))+' / '+fs(mpmax())+'</div>'+barHtml((G.mp||0)/mpmax()*100,'linear-gradient(90deg,#2b4d8f,#6aa8ff)');
- return h+'</div>';
-}
 function tutHtml(){
  if(G.gen>1||(G.flags&&G.flags.tutDone))return '';
  var items=[
