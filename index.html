@@ -681,7 +681,7 @@ function newG(){
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({g:G,t:Date.now()}))}catch(e){SAVE_OK=0}}
 function checkStore(){try{localStorage.setItem('qx_merge_test','1');var v=localStorage.getItem('qx_merge_test');localStorage.removeItem('qx_merge_test');SAVE_OK=(v==='1')?1:0}catch(e){SAVE_OK=0}}
-var APP_VER='1.28';
+var APP_VER='1.29';
 var UPD_FEED='https://annuel.framapad.org/p/xiuxian-ver-839201/export/txt';
 var UPD_PAGE='https://muse.ai/s/xiu-xian-wen-dao-iphone-zhu-ping-mu-xtxa6xlxjxtjxubaxn/ZoHtkV6WZ6hnaSFnyc-ViFRS4ubfr8kQ-UJid-_1P8I';
 function verCmp(a,b){a=(''+a).split('.');b=(''+b).split('.');for(var i=0;i<3;i++){var x=parseInt(a[i]||'0',10),y=parseInt(b[i]||'0',10);if(x!==y)return x>y?1:-1}return 0}
@@ -1474,6 +1474,7 @@ function affCard(){
 function bio(){
  var h='<div class="c"><h4>存档 <u>'+(SAVE_OK?'本地保存正常':'⚠ 本地保存不可用')+'</u></h4><p>进度会自动存到当前浏览器（同一浏览器、同一入口打开才能读到）。换浏览器、换设备或怕丢档时：导出存档码存到备忘录，之后在任意环境导入即可恢复。</p><div class="g2"><button class="b sm" data-a="expCode">导出存档码</button><button class="b sm" data-a="impCode">导入存档码</button></div></div>';
  h+='<div class="c"><h4>设置 <u>观感</u></h4><div class="g2"><button class="b sm" data-a="setOpt" data-i="font">字号 · '+(G.flags&&G.flags.fontBig?'大':'标准')+'</button><button class="b sm" data-a="setOpt" data-i="anim">动画演出 · '+(G.flags&&G.flags.anim===0?'关':'开')+'</button><button class="b sm" data-a="setOpt" data-i="snd">音效 · '+(G.flags&&G.flags.snd===0?'关':'开')+'</button><button class="b sm" data-a="setOpt" data-i="spd">战斗倍速 · ×'+((G.flags&&G.flags.spd)||1)+'</button><button class="b sm" data-a="setOpt" data-i="intro">页面说明 · '+((G.flags&&G.flags.showIntro)?'显示':'折叠')+'</button></div><p>字号调大后页面文字变大；关掉动画后，突破演出与战斗飘字不再出现；倍速只影响自动战斗的出手间隔，战斗里也能切换。音效为程序合成的轻响，不加载任何音频文件。</p></div>';
+ h+='<div class="c"><h4>重开 <u>从头再来</u></h4><p>对此世不满，可清空本入口的全部进度从头再玩：境界、宗门、成就、世数一并清零（与保留根基的「转世」不同），回到最初重新抽灵根。</p>'+((G.flags&&G.flags.rsAsk)?'<p style="color:#e08a8a">⚠ 确认重开？存档将彻底清空、不可恢复（怕后悔先去上方导出存档码）。</p><div class="g2"><button class="b sm" data-a="restartYes" style="border-color:#b3543f;color:#e08a8a">确认重开 · 清空重来</button><button class="b sm" data-a="restartNo">再想想</button></div>':'<button class="b w" data-a="restartAsk">🔄 重开一世 · 重抽灵根</button>')+'</div>';
  h+='<div class="c"><h4>生平 <u>第 '+G.gen+' 世</u></h4><p>突破 '+G.stat.brk+' 次 · 战胜 '+G.stat.win+' 场 · 云游 '+G.stat.ev+' 事 · 炼丹 '+G.stat.pill+' 枚</p></div>';
  h+=affCard();
  if(G.ended){
@@ -1863,6 +1864,14 @@ function act(a,i){
    mq.o.map(function(o,k){return '<button class="op" data-m="'+k+'">'+o[0]+'</button>'}).join('');
   ov.className='ov on';
   return;
+ }else if(a=='restartAsk'){
+  if(!G.flags)G.flags={};G.flags.rsAsk=1;say('重开不可恢复，请再确认一次。','rr');
+ }else if(a=='restartNo'){
+  if(G.flags)delete G.flags.rsAsk;say('已取消重开，此世照旧。','oo');
+ }else if(a=='restartYes'){
+  G=newG();B=null;MP=null;AL=null;cd=0;TB='cul';
+  say('前尘尽散。你睁开眼，又回到青云山下——重新测灵定根吧。','oo');
+  showRootStart();
  }else if(a=='reborn'){
   var gi=G.ins+3,gb=G.bone+2,gen=G.gen+1,ach=G.ach,stt=G.stat;
   G=newG();G.gen=gen;G.ins=gi;G.bone=gb;G.ach=ach;G.stat=stt;G.hp=hmax();G.mp=mpmax();if(gen>=2)grantFurn('f5','轮回馈赠');
